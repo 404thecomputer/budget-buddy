@@ -1,4 +1,5 @@
-import 'package:budget_buddy/item_list_feature/item_list_view.dart';
+import 'package:budget_buddy/pages/item_list_view.dart';
+import 'package:budget_buddy/pages/test.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,11 +33,43 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const ItemListView(),
+      home: MainNavigator(),
     );
   }
 }
 
+class MainNavigator extends StatefulWidget {
+  MainNavigator({super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    return MainNavigatorState();
+  }
+
+  int currentIndex = 0;
+
+  List<Widget> screenList = [ItemListView(), Test()];
+}
+
+class MainNavigatorState extends State<MainNavigator> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: widget.screenList[widget.currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.list), label: "List View"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_month), label: "Calendaar View"),
+          ],
+          onTap: (i) {
+            setState(() {
+              widget.currentIndex = i;
+            });
+          },
+        ));
+  }
+}
 // class MyHomePage extends StatefulWidget {
 //   const MyHomePage({super.key, required this.title});
 

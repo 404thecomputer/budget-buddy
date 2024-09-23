@@ -19,6 +19,7 @@ class ItemListViewState extends State<ItemListView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Budget Buddy"),
+        centerTitle: true,
       ),
       body: ListView.builder(
         restorationId: 'sampleItemListView',
