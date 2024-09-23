@@ -14,6 +14,18 @@ class ItemListView extends StatefulWidget {
 class ItemListViewState extends State<ItemListView> {
   final List<Item> items = [Item(name: "Bill 1")];
 
+  void _handleNewItem(Item item) {
+    setState(() {
+      items.add(item);
+    });
+  }
+
+  void _handleDeleteItem(Item item) {
+    setState(() {
+      items.remove(item);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +47,26 @@ class ItemListViewState extends State<ItemListView> {
               ),
               onTap: () {
                 //use navigator to open up a details dialog box.
+
+                //temp function
+                _handleDeleteItem(item);
               });
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // showDialog(
+          //   context: context,
+          //   builder: (_) {
+          //     return dialogWidgetName;
+          //   }
+          // );
+
+          //temp function
+          _handleNewItem(Item(name: "Bill 5"));
+        },
+        tooltip: "Add New Item",
+        child: const Icon(Icons.add),
       ),
     );
   }

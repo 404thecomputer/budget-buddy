@@ -60,13 +60,14 @@ class MainNavigatorState extends State<MainNavigator> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "List View"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month), label: "Calendaar View"),
+                icon: Icon(Icons.calendar_month), label: "Calendar View"),
           ],
           onTap: (i) {
             setState(() {
               widget.currentIndex = i;
             });
           },
+          selectedItemColor: Colors.green,
         ));
   }
 }
