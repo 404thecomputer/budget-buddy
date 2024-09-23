@@ -46,17 +46,18 @@ class MainNavigator extends StatefulWidget {
     return MainNavigatorState();
   }
 
-  int currentIndex = 0;
-
   //list of screens
-  List<Widget> screenList = [const ItemListView(), const Test()];
 }
 
 class MainNavigatorState extends State<MainNavigator> {
+  int currentIndex = 0;
+
+  final List<Widget> screenList = [const ItemListView(), const Test()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: widget.screenList[widget.currentIndex], //loads different screens
+        body: screenList[currentIndex], //loads different screens
         bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "List View"),
@@ -65,7 +66,7 @@ class MainNavigatorState extends State<MainNavigator> {
           ],
           onTap: (i) {
             setState(() {
-              widget.currentIndex = i;
+              currentIndex = i;
             });
           },
           selectedItemColor: Colors

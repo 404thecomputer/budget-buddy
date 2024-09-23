@@ -14,7 +14,9 @@ class ItemListView extends StatefulWidget {
 //TODO: I need to create a list_object widget so that I can better display information of the items
 
 class ItemListViewState extends State<ItemListView> {
-  final List<Item> items = [Item(name: "Bill 1")];
+  final List<Item> items = [
+    Item(name: "Bill 1")
+  ]; //TODO: this should be known in the MainNavigator class
 
   void _handleNewItem(Item item) {
     setState(() {
