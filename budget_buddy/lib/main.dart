@@ -48,14 +48,15 @@ class MainNavigator extends StatefulWidget {
 
   int currentIndex = 0;
 
-  List<Widget> screenList = [ItemListView(), Test()];
+  //list of screens
+  List<Widget> screenList = [const ItemListView(), const Test()];
 }
 
 class MainNavigatorState extends State<MainNavigator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: widget.screenList[widget.currentIndex],
+        body: widget.screenList[widget.currentIndex], //loads different screens
         bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "List View"),
@@ -67,7 +68,8 @@ class MainNavigatorState extends State<MainNavigator> {
               widget.currentIndex = i;
             });
           },
-          selectedItemColor: Colors.green,
+          selectedItemColor: Colors
+              .green, //this doesn't change when i click on different icons. idk why
         ));
   }
 }
