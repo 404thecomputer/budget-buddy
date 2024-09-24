@@ -1,3 +1,5 @@
+import 'package:budget_buddy/objects/item.dart';
+import 'package:budget_buddy/objects/item_list.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
 import 'package:budget_buddy/pages/test.dart';
 import 'package:flutter/material.dart';
@@ -33,13 +35,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: MainNavigator(),
+      home: const MainNavigator(),
     );
   }
 }
 
 class MainNavigator extends StatefulWidget {
-  MainNavigator({super.key});
+  const MainNavigator({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -50,14 +52,42 @@ class MainNavigator extends StatefulWidget {
 }
 
 class MainNavigatorState extends State<MainNavigator> {
+  late List<Item> items = [];
   int currentIndex = 0;
 
-  final List<Widget> screenList = [const ItemListView(), const Test()];
+  void _handleNewItem(Item item) {
+    setState(() {
+      items.add(item);
+    });
+  }
+
+  void _handleDeleteItem(Item item) {
+    setState(() {
+      items.remove(item);
+    });
+  }
+
+  @override
+  void initState() {
+    items = [Item(name: "Bill 1")];
+    super.initState();
+  }
+
+  Widget returnScreen(int screenIndex) {
+    if (screenIndex == 0) {
+      return ItemListView(
+          items: items,
+          onListChanged: _handleNewItem,
+          onDeleteItem: _handleDeleteItem);
+    } else {
+      return const Test();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: screenList[currentIndex], //loads different screens
+        body: returnScreen(currentIndex),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "List View"),
@@ -69,6 +99,7 @@ class MainNavigatorState extends State<MainNavigator> {
               currentIndex = i;
             });
           },
+          currentIndex: currentIndex,
           selectedItemColor: Colors
               .green, //this doesn't change when i click on different icons. idk why
         ));

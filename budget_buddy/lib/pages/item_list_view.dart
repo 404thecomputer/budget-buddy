@@ -1,35 +1,27 @@
 import 'package:budget_buddy/objects/item.dart';
 import 'package:flutter/material.dart';
 
+typedef ItemsListChangedCallback = Function(Item item);
+typedef ItemsListDeletedCallback = Function(Item item);
+
 class ItemListView extends StatefulWidget {
-  const ItemListView({
-    super.key,
-  });
+  ItemListView(
+      {super.key,
+      required this.items,
+      required this.onListChanged,
+      required this.onDeleteItem});
+
+  final List<Item> items;
+  final ItemsListChangedCallback onListChanged;
+  final ItemsListDeletedCallback onDeleteItem;
+
   @override
   State<StatefulWidget> createState() {
     return ItemListViewState();
   }
 }
 
-//TODO: I need to create a list_object widget so that I can better display information of the items
-
 class ItemListViewState extends State<ItemListView> {
-  final List<Item> items = [
-    Item(name: "Bill 1")
-  ]; //TODO: this should be known in the MainNavigator class
-
-  void _handleNewItem(Item item) {
-    setState(() {
-      items.add(item);
-    });
-  }
-
-  void _handleDeleteItem(Item item) {
-    setState(() {
-      items.remove(item);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,9 +31,9 @@ class ItemListViewState extends State<ItemListView> {
       ),
       body: ListView.builder(
         restorationId: 'sampleItemListView',
-        itemCount: items.length,
+        itemCount: widget.items.length,
         itemBuilder: (BuildContext context, int index) {
-          final item = items[index];
+          final item = widget.items[index];
 
           return ListTile(
               title: Text(item.name),
@@ -53,7 +45,7 @@ class ItemListViewState extends State<ItemListView> {
                 //use navigator to open up a details dialog box.
 
                 //temp function
-                _handleDeleteItem(item);
+                widget.onDeleteItem(item);
               });
         },
       ),
@@ -67,7 +59,7 @@ class ItemListViewState extends State<ItemListView> {
           // );
 
           //temp function
-          _handleNewItem(Item(name: "Bill 5"));
+          widget.onListChanged(Item(name: "Bill 5"));
         },
         tooltip: "Add New Item",
         child: const Icon(Icons.add),
