@@ -2,6 +2,7 @@ import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/pages/item_calendar_view.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,6 +52,7 @@ class MainNavigator extends StatefulWidget {
 class MainNavigatorState extends State<MainNavigator> {
   late List<Item> items = [];
   int currentIndex = 0;
+  DateTime? selectedDay;
 
   void _handleNewItem(Item item) {
     setState(() {
@@ -64,6 +66,10 @@ class MainNavigatorState extends State<MainNavigator> {
     });
   }
 
+  List<Item> _getItemsForSelectedDay(DateTime day) {
+    return items.where((item) => isSameDay(item.date, day)).toList();
+  }
+
   @override
   void initState() {
     items = [Item(name: "Bill 5", date: DateTime.now())];
@@ -72,10 +78,21 @@ class MainNavigatorState extends State<MainNavigator> {
 
   Widget returnScreen(int screenIndex) {
     if (screenIndex == 0) {
-      return const ItemCalendarView();
+      return ItemCalendarView(
+        items: items,
+        selectedDay: selectedDay,
+        onListChanged: _handleNewItem,
+        onDeleteItem: _handleDeleteItem,
+        onDaySelected: (selectedDay, focusedDay) {
+          setState(() {
+            this.selectedDay = selectedDay;
+            currentIndex = 1; // Switch to list view when day selected
+          });
+        },
+      );
     } else {
       return ItemListView(
-          items: items,
+          items: selectedDay != null ? _getItemsForSelectedDay(selectedDay!) : items,
           onListChanged: _handleNewItem,
           onDeleteItem: _handleDeleteItem);
     }
