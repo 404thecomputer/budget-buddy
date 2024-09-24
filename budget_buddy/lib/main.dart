@@ -1,5 +1,4 @@
 import 'package:budget_buddy/objects/item.dart';
-import 'package:budget_buddy/objects/item_list.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
 import 'package:budget_buddy/pages/test.dart';
 import 'package:flutter/material.dart';
@@ -47,8 +46,6 @@ class MainNavigator extends StatefulWidget {
   State<StatefulWidget> createState() {
     return MainNavigatorState();
   }
-
-  //list of screens
 }
 
 class MainNavigatorState extends State<MainNavigator> {
@@ -100,8 +97,7 @@ class MainNavigatorState extends State<MainNavigator> {
             });
           },
           currentIndex: currentIndex,
-          selectedItemColor: Colors
-              .green, //this doesn't change when i click on different icons. idk why
+          selectedItemColor: Colors.green,
         ));
   }
 }
