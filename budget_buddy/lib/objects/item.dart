@@ -1,5 +1,7 @@
 class Item {
-  Item({required this.name});
+  String name;
+  double? payment = 0.0;
+  int? confirmationNumber = 0;
 
-  final String name;
+  Item({required this.name, this.payment, this.confirmationNumber});
 }

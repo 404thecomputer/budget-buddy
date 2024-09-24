@@ -38,6 +38,7 @@ class ItemListViewState extends State<ItemListView> {
 
           return BudgetItem(
             item: item,
+            onDeleteItem: widget.onDeleteItem,
           );
         },
       ),
@@ -51,7 +52,7 @@ class ItemListViewState extends State<ItemListView> {
           // );
 
           //temp function. will be replaced when dialog windows are made.
-          widget.onListChanged(Item(name: "Bill 5"));
+          widget.onListChanged(Item(name: "Bill 5", confirmationNumber: 45));
         },
         tooltip: "Add New Item",
         child: const Icon(Icons.add),
