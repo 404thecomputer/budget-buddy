@@ -1,5 +1,4 @@
 import 'package:budget_buddy/objects/item.dart';
-import 'package:budget_buddy/objects/item_list.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
 import 'package:budget_buddy/pages/test.dart';
 import 'package:flutter/material.dart';
