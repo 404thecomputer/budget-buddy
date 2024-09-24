@@ -1,6 +1,6 @@
 import 'package:budget_buddy/objects/item.dart';
+import 'package:budget_buddy/pages/item_calendar_view.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
-import 'package:budget_buddy/pages/test.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -66,18 +66,18 @@ class MainNavigatorState extends State<MainNavigator> {
 
   @override
   void initState() {
-    items = [Item(name: "Bill 1")];
+    items = [Item(name: "Bill 5", date: DateTime.now())];
     super.initState();
   }
 
   Widget returnScreen(int screenIndex) {
     if (screenIndex == 0) {
+      return const ItemCalendarView();
+    } else {
       return ItemListView(
           items: items,
           onListChanged: _handleNewItem,
           onDeleteItem: _handleDeleteItem);
-    } else {
-      return const Test();
     }
   }
 
@@ -87,9 +87,8 @@ class MainNavigatorState extends State<MainNavigator> {
         body: returnScreen(currentIndex),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Calendar View"),
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "List View"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month), label: "Calendar View"),
           ],
           onTap: (i) {
             setState(() {
