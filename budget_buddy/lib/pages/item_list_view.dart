@@ -1,11 +1,12 @@
 import 'package:budget_buddy/objects/item.dart';
+import 'package:budget_buddy/widgets/budget_item.dart';
 import 'package:flutter/material.dart';
 
 typedef ItemsListChangedCallback = Function(Item item);
 typedef ItemsListDeletedCallback = Function(Item item);
 
 class ItemListView extends StatefulWidget {
-  ItemListView(
+  const ItemListView(
       {super.key,
       required this.items,
       required this.onListChanged,
@@ -35,18 +36,10 @@ class ItemListViewState extends State<ItemListView> {
         itemBuilder: (BuildContext context, int index) {
           final item = widget.items[index];
 
-          return ListTile(
-              title: Text(item.name),
-              leading: const CircleAvatar(
-                // This might be the picture of the item
-                backgroundColor: Colors.green,
-              ),
-              onTap: () {
-                //use navigator to open up a details dialog box.
-
-                //temp function
-                widget.onDeleteItem(item);
-              });
+          return BudgetItem(
+            item: item,
+            onDeleteItem: widget.onDeleteItem,
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -58,8 +51,8 @@ class ItemListViewState extends State<ItemListView> {
           //   }
           // );
 
-          //temp function
-          widget.onListChanged(Item(name: "Bill 5"));
+          //temp function. will be replaced when dialog windows are made.
+          widget.onListChanged(Item(name: "Bill 5", confirmationNumber: 45));
         },
         tooltip: "Add New Item",
         child: const Icon(Icons.add),
