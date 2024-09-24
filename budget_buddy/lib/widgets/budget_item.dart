@@ -1,5 +1,6 @@
 import 'package:budget_buddy/objects/item.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 typedef ItemsListDeletedCallback = Function(Item item);
 
@@ -17,7 +18,7 @@ class BudgetItem extends StatelessWidget {
           // This might be the picture of the item
           backgroundColor: Colors.green,
         ),
-        subtitle: Text("${item.confirmationNumber}"),
+        subtitle: Text("${item.confirmationNumber} | ${DateFormat('yyyy-MM-dd').format(item.date!)}"),
         onTap: () {
           //open a dialog box
 

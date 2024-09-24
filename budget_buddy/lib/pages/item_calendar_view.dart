@@ -1,10 +1,26 @@
+import 'package:budget_buddy/objects/item.dart';
+import 'package:budget_buddy/pages/item_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../utils.dart';
 
 
 class ItemCalendarView extends StatefulWidget {
-  const ItemCalendarView({super.key});
+  const ItemCalendarView({
+    required this.items,
+    this.selectedDay,
+    required this.onDaySelected,
+    super.key, 
+    required this.onListChanged, 
+    required this.onDeleteItem
+  });
+
+  final List<Item> items;
+  final DateTime? selectedDay;
+  final Function(DateTime, DateTime) onDaySelected;
+  final ItemsListChangedCallback onListChanged;
+  final ItemsListDeletedCallback onDeleteItem;
+
   @override
   _ItemCalendarViewState createState() => _ItemCalendarViewState();
 }
@@ -22,17 +38,16 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
         centerTitle: true,
       ),
       body: TableCalendar(
+        shouldFillViewport: true,
         firstDay: kFirstDay,
         lastDay: kLastDay,
         focusedDay: _focusedDay,
         calendarFormat: _calendarFormat,
         selectedDayPredicate: (day) {
-          // Use `selectedDayPredicate` to determine which day is currently selected.
-          // If this returns true, then `day` will be marked as selected.
-
-          // Using `isSameDay` is recommended to disregard
-          // the time-part of compared DateTime objects.
           return isSameDay(_selectedDay, day);
+        },
+        eventLoader: (day) {
+          return widget.items.where((item) => isSameDay(item.date, day)).toList();
         },
         onDaySelected: (selectedDay, focusedDay) {
           if (!isSameDay(_selectedDay, selectedDay)) {
@@ -42,6 +57,18 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
               _focusedDay = focusedDay;
             });
           }
+        },
+        onDayLongPressed: (selectedDay, focusedDay) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ItemListView(
+                items: widget.items.where((item) => isSameDay(item.date, selectedDay)).toList(),
+                onListChanged: widget.onListChanged,
+                onDeleteItem: widget.onDeleteItem,
+      ),
+    ),
+  );
         },
         onFormatChanged: (format) {
           if (_calendarFormat != format) {
@@ -55,6 +82,21 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
           // No need to call `setState()` here
           _focusedDay = focusedDay;
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // showDialog(
+          //   context: context,
+          //   builder: (_) {
+          //     return dialogWidgetName;
+          //   }
+          // );
+
+          //temp function. will be replaced when dialog windows are made.
+          widget.onListChanged(Item(name: "Bill 5", date: DateTime.now()));
+        },
+        tooltip: "Add New Item",
+        child: const Icon(Icons.add),
       ),
     );
   }
