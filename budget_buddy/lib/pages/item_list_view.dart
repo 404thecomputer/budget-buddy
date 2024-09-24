@@ -52,7 +52,7 @@ class ItemListViewState extends State<ItemListView> {
           // );
 
           //temp function. will be replaced when dialog windows are made.
-          widget.onListChanged(Item(name: "Bill 5"));
+          widget.onListChanged(Item(name: "Bill 5", date: DateTime.now()));
         },
         tooltip: "Add New Item",
         child: const Icon(Icons.add),
