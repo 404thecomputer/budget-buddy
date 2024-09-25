@@ -1,0 +1,4 @@
+Add payment amount to add bill dialog box
+Add date picker to dialog box
+Add camera function
+Add frequency

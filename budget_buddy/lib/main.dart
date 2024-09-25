@@ -72,7 +72,7 @@ class MainNavigatorState extends State<MainNavigator> {
 
   @override
   void initState() {
-    items = [Item(name: "Bill 5", date: DateTime.now())];
+    items = [Item(name: "Bill 5", date: DateTime.now(), payment: 0.0)];
     super.initState();
   }
 
@@ -92,7 +92,9 @@ class MainNavigatorState extends State<MainNavigator> {
       );
     } else {
       return ItemListView(
-          items: selectedDay != null ? _getItemsForSelectedDay(selectedDay!) : items,
+          items: selectedDay != null
+              ? _getItemsForSelectedDay(selectedDay!)
+              : items,
           onListChanged: _handleNewItem,
           onDeleteItem: _handleDeleteItem);
     }
@@ -104,7 +106,8 @@ class MainNavigatorState extends State<MainNavigator> {
         body: returnScreen(currentIndex),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: "Calendar View"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_month), label: "Calendar View"),
             BottomNavigationBarItem(icon: Icon(Icons.list), label: "List View"),
           ],
           onTap: (i) {

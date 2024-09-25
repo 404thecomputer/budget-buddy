@@ -59,8 +59,10 @@ class _ItemDialogState extends State<ItemDialog> {
               onPressed: value.text.isNotEmpty
                   ? () {
                       setState(() {
-                        widget.onListChanged(
-                            Item(name: valueText, date: DateTime.now()));
+                        widget.onListChanged(Item(
+                            name: valueText,
+                            date: DateTime.now(),
+                            payment: 0.0));
                         Navigator.pop(context);
                       });
                     }
