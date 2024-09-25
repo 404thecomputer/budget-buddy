@@ -1,3 +1,4 @@
+import 'package:budget_buddy/dialogs/add_dialog.dart';
 import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/widgets/budget_item.dart';
 import 'package:flutter/material.dart';
@@ -44,15 +45,13 @@ class ItemListViewState extends State<ItemListView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // showDialog(
-          //   context: context,
-          //   builder: (_) {
-          //     return dialogWidgetName;
-          //   }
-          // );
+          showDialog(
+              context: context,
+              builder: (_) {
+                return ItemDialog(onListChanged: widget.onListChanged);
+              });
 
           //temp function. will be replaced when dialog windows are made.
-          widget.onListChanged(Item(name: "Bill 5", date: DateTime.now()));
         },
         tooltip: "Add New Item",
         child: const Icon(Icons.add),

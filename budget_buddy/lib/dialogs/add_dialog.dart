@@ -1,15 +1,16 @@
+import 'package:budget_buddy/objects/item.dart';
 import 'package:flutter/material.dart';
+
 // adapted from to-dont-list code
-typedef ItemListAddedCallback = Function(
-    String value, TextEditingController textConroller);
+typedef ItemsListChangedCallback = Function(Item item);
 
 class ItemDialog extends StatefulWidget {
   const ItemDialog({
     super.key,
-    required this.onListAdded,
+    required this.onListChanged,
   });
 
-  final ItemListAddedCallback onListAdded;
+  final ItemsListChangedCallback onListChanged;
 
   @override
   State<ItemDialog> createState() => _ItemDialogState();
@@ -49,7 +50,6 @@ class _ItemDialogState extends State<ItemDialog> {
             });
           },
         ),
-
         ValueListenableBuilder<TextEditingValue>(
           valueListenable: _inputController,
           builder: (context, value, child) {
@@ -59,7 +59,8 @@ class _ItemDialogState extends State<ItemDialog> {
               onPressed: value.text.isNotEmpty
                   ? () {
                       setState(() {
-                        widget.onListAdded(valueText, _inputController);
+                        widget.onListChanged(
+                            Item(name: valueText, date: DateTime.now()));
                         Navigator.pop(context);
                       });
                     }

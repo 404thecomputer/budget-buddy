@@ -1,19 +1,20 @@
+import 'package:budget_buddy/dialogs/add_dialog.dart';
 import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../utils.dart';
 
+typedef ItemsListChangedCallback = Function(Item item);
 
 class ItemCalendarView extends StatefulWidget {
-  const ItemCalendarView({
-    required this.items,
-    this.selectedDay,
-    required this.onDaySelected,
-    super.key, 
-    required this.onListChanged, 
-    required this.onDeleteItem
-  });
+  const ItemCalendarView(
+      {required this.items,
+      this.selectedDay,
+      required this.onDaySelected,
+      super.key,
+      required this.onListChanged,
+      required this.onDeleteItem});
 
   final List<Item> items;
   final DateTime? selectedDay;
@@ -47,7 +48,9 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
           return isSameDay(_selectedDay, day);
         },
         eventLoader: (day) {
-          return widget.items.where((item) => isSameDay(item.date, day)).toList();
+          return widget.items
+              .where((item) => isSameDay(item.date, day))
+              .toList();
         },
         onDaySelected: (selectedDay, focusedDay) {
           if (!isSameDay(_selectedDay, selectedDay)) {
@@ -63,12 +66,14 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
             context,
             MaterialPageRoute(
               builder: (context) => ItemListView(
-                items: widget.items.where((item) => isSameDay(item.date, selectedDay)).toList(),
+                items: widget.items
+                    .where((item) => isSameDay(item.date, selectedDay))
+                    .toList(),
                 onListChanged: widget.onListChanged,
                 onDeleteItem: widget.onDeleteItem,
-      ),
-    ),
-  );
+              ),
+            ),
+          );
         },
         onFormatChanged: (format) {
           if (_calendarFormat != format) {
@@ -85,15 +90,11 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // showDialog(
-          //   context: context,
-          //   builder: (_) {
-          //     return dialogWidgetName;
-          //   }
-          // );
-
-          //temp function. will be replaced when dialog windows are made.
-          widget.onListChanged(Item(name: "Bill 5", date: DateTime.now()));
+          showDialog(
+              context: context,
+              builder: (_) {
+                return ItemDialog(onListChanged: widget.onListChanged);
+              });
         },
         tooltip: "Add New Item",
         child: const Icon(Icons.add),
