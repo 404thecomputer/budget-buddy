@@ -95,14 +95,15 @@ class MainNavigatorState extends State<MainNavigator> {
 
   Widget returnScreen(int screenIndex) {
     if (screenIndex == 0) {
-      return TakePictureScreen(camera: widget.camera);
-    }
-    if (screenIndex == 1) {
+    //   return TakePictureScreen(camera: widget.camera);
+    // }
+    // if (screenIndex == 1) {
       return ItemCalendarView(
         items: items,
         selectedDay: selectedDay,
         onListChanged: _handleNewItem,
         onDeleteItem: _handleDeleteItem,
+        cam: widget.camera,
         onDaySelected: (selectedDay, focusedDay) {
           setState(() {
             this.selectedDay = selectedDay;
@@ -116,6 +117,7 @@ class MainNavigatorState extends State<MainNavigator> {
               ? _getItemsForSelectedDay(selectedDay!)
               : items,
           onListChanged: _handleNewItem,
+          cam: widget.camera,
           onDeleteItem: _handleDeleteItem);
     }
   }

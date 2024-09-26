@@ -23,7 +23,7 @@ class BudgetItem extends StatelessWidget {
           backgroundColor: Colors.green,
         ),
         subtitle: Text(
-            "${item.confirmationNumber} | ${DateFormat('MM-dd-yy').format(item.date!)} | $fo"),
+            "${DateFormat('MM-dd-yy').format(item.date!)} | $fo"),
         onTap: () {
           //open a dialog box
 

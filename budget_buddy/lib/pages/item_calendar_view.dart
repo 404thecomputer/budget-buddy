@@ -3,6 +3,7 @@ import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:camera/camera.dart';
 import '../utils.dart';
 
 typedef ItemsListChangedCallback = Function(Item item);
@@ -14,13 +15,15 @@ class ItemCalendarView extends StatefulWidget {
       required this.onDaySelected,
       super.key,
       required this.onListChanged,
-      required this.onDeleteItem});
+      required this.onDeleteItem,
+      required this.cam,});
 
   final List<Item> items;
   final DateTime? selectedDay;
   final Function(DateTime, DateTime) onDaySelected;
   final ItemsListChangedCallback onListChanged;
   final ItemsListDeletedCallback onDeleteItem;
+  final CameraDescription cam;
 
   @override
   _ItemCalendarViewState createState() => _ItemCalendarViewState();
@@ -71,6 +74,7 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
                     .toList(),
                 onListChanged: widget.onListChanged,
                 onDeleteItem: widget.onDeleteItem,
+                cam: widget.cam,
               ),
             ),
           );
@@ -93,7 +97,7 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
           showDialog(
               context: context,
               builder: (_) {
-                return ItemDialog(onListChanged: widget.onListChanged);
+                return ItemDialog(onListChanged: widget.onListChanged, cam: widget.cam);
               });
         },
         tooltip: "Add New Item",

@@ -1,6 +1,7 @@
 import 'package:budget_buddy/dialogs/add_dialog.dart';
 import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/widgets/budget_item.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 typedef ItemsListChangedCallback = Function(Item item);
@@ -11,11 +12,13 @@ class ItemListView extends StatefulWidget {
       {super.key,
       required this.items,
       required this.onListChanged,
-      required this.onDeleteItem});
+      required this.onDeleteItem,
+      required this.cam});
 
   final List<Item> items;
   final ItemsListChangedCallback onListChanged;
   final ItemsListDeletedCallback onDeleteItem;
+  final CameraDescription cam;
 
   @override
   State<StatefulWidget> createState() {
@@ -48,7 +51,7 @@ class ItemListViewState extends State<ItemListView> {
           showDialog(
               context: context,
               builder: (_) {
-                return ItemDialog(onListChanged: widget.onListChanged);
+                return ItemDialog(onListChanged: widget.onListChanged, cam: widget.cam);
               });
 
           //temp function. will be replaced when dialog windows are made.

@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:budget_buddy/dialogs/take_picture_screen.dart';
 import 'package:budget_buddy/objects/item.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -9,9 +13,11 @@ class ItemDialog extends StatefulWidget {
   const ItemDialog({
     super.key,
     required this.onListChanged,
+    required this.cam,
   });
 
   final ItemsListChangedCallback onListChanged;
+  final CameraDescription cam;
 
   @override
   State<ItemDialog> createState() => _ItemDialogState();
@@ -26,10 +32,14 @@ class _ItemDialogState extends State<ItemDialog> {
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green);
+  final ButtonStyle cameraStyle = ElevatedButton.styleFrom(
+      textStyle: const TextStyle(fontSize: 20));
 
   String billName = "";
+  String textString = "";
   DateTime? moment = DateTime.now();
   double amount = 0.0;
+  Image? img;
 
 
   @override
@@ -53,7 +63,7 @@ class _ItemDialogState extends State<ItemDialog> {
             onTap: () async {
               moment = await showDatePicker(
                 context: context,
-                initialDate: DateTime.now(),
+                initialDate: DateTime(2000),
                 firstDate: DateTime.now(),
                 lastDate: DateTime(2101),
               );
@@ -73,7 +83,20 @@ class _ItemDialogState extends State<ItemDialog> {
             },
             controller: _amountInputController,
             decoration: const InputDecoration(labelText: "Amount"),
-          )
+          ),
+          ElevatedButton(
+            key: const Key("CameraButton"),
+            style: cameraStyle,
+            child: const Text('Take Picture'),
+            onPressed: () async {
+              TakePictureScreen(camera: widget.cam); // needs to return an image/path
+              setState(() {
+                // img = ; // needs to be set to said path
+                textString = "Picture taken.";
+              });
+            }
+          ),
+          Text(textString),
         ]
       ),   
       actions: <Widget>[
@@ -94,7 +117,7 @@ class _ItemDialogState extends State<ItemDialog> {
           onPressed: () {
             setState(() {
               widget.onListChanged(
-                  Item(name: billName, date: DateTime.now(), payment: amount));
+                  Item(name: billName, date: DateTime.now(), payment: amount, image: img));
               Navigator.pop(context);
             });
           },

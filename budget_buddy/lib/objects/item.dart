@@ -11,6 +11,5 @@ class Item {
       {required this.name,
       required this.date,
       required this.payment,
-      this.confirmationNumber,
       this.image});
 }
