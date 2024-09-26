@@ -1,15 +1,29 @@
+import 'package:budget_buddy/dialogs/take_picture_screen.dart';
 import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/pages/item_calendar_view.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  // Ensure that plugin services are initialized so that `availableCameras()`
+  // can be called before `runApp()`
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //Obtain a list of the available cameras on the device
+  final cameras = await availableCameras();
+
+  //Get a specific camera from the list of available cameras
+  final firstCamera = cameras.first;
+  runApp(MyApp(
+    firstCamera: firstCamera,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final firstCamera;
+  const MyApp({super.key, required this.firstCamera});
 
   // This widget is the root of your application.
   @override
@@ -35,13 +49,16 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const MainNavigator(),
+      home: MainNavigator(
+        camera: firstCamera,
+      ),
     );
   }
 }
 
 class MainNavigator extends StatefulWidget {
-  const MainNavigator({super.key});
+  final camera;
+  const MainNavigator({super.key, required this.camera});
 
   @override
   State<StatefulWidget> createState() {
@@ -78,6 +95,9 @@ class MainNavigatorState extends State<MainNavigator> {
 
   Widget returnScreen(int screenIndex) {
     if (screenIndex == 0) {
+      return TakePictureScreen(camera: widget.camera);
+    }
+    if (screenIndex == 1) {
       return ItemCalendarView(
         items: items,
         selectedDay: selectedDay,
