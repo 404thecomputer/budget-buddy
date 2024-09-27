@@ -43,6 +43,7 @@ class ItemListViewState extends State<ItemListView> {
           return BudgetItem(
             item: item,
             onDeleteItem: widget.onDeleteItem,
+            cam: widget.cam
           );
         },
       ),

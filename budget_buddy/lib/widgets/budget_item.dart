@@ -1,5 +1,7 @@
+import 'package:budget_buddy/dialogs/info_dialog.dart';
 import 'package:budget_buddy/dialogs/take_picture_screen.dart';
 import 'package:budget_buddy/objects/item.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_formatter/money_formatter.dart';
@@ -7,10 +9,11 @@ import 'package:money_formatter/money_formatter.dart';
 typedef ItemsListDeletedCallback = Function(Item item);
 
 class BudgetItem extends StatelessWidget {
-  const BudgetItem({super.key, required this.item, required this.onDeleteItem});
+  const BudgetItem({super.key, required this.item, required this.onDeleteItem, required this.cam});
 
   final Item item;
   final ItemsListDeletedCallback onDeleteItem;
+  final CameraDescription cam;
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +27,14 @@ class BudgetItem extends StatelessWidget {
           backgroundColor: Colors.green,
         ),
         subtitle: Text("${DateFormat('MM-dd-yy').format(item.date!)} | $fo"),
-        onLongPress: () {
-          onDeleteItem(item);
-        },
         onTap: () {
           //open a dialog box
-          if (item.image != null) {
-            showDialog(
-                context: context,
-                builder: (_) {
-                  return DisplayPictureScreen(image: item.image!);
-                });
-          }
+          showDialog(
+              context: context,
+              builder: (_) {
+                return InfoDialog(
+                    item: item, onDeleteItem: onDeleteItem, cam: cam);
+              });
         });
   }
 }

@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 
 // adapted from to-dont-list code
 typedef ItemsListChangedCallback = Function(Item item);
+const frequencies = <String>['No Repeat', 'Daily', 'Weekly', 'Biweekly', 'Monthly'];
 
 class ItemDialog extends StatefulWidget {
   const ItemDialog({
@@ -18,6 +19,7 @@ class ItemDialog extends StatefulWidget {
 
   final ItemsListChangedCallback onListChanged;
   final CameraDescription cam;
+
 
   @override
   State<ItemDialog> createState() => _ItemDialogState();
@@ -40,6 +42,7 @@ class _ItemDialogState extends State<ItemDialog> {
   DateTime? moment = DateTime.now();
   double amount = 0.0;
   XFile? img;
+  String dropdownValue = frequencies.first;
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +85,28 @@ class _ItemDialogState extends State<ItemDialog> {
           controller: _amountInputController,
           decoration: const InputDecoration(labelText: "Amount"),
         ),
+        DropdownButton<String>(
+          value: dropdownValue,
+          icon: const Icon(Icons.arrow_downward),
+          elevation: 16,
+          style: const TextStyle(color: Colors.deepOrange),
+          underline: Container(
+            height: 2,
+            color: Colors.deepOrangeAccent,
+          ),
+          onChanged: (String? value) {
+            // This is called when the user selects an item.
+            setState(() {
+              dropdownValue = value!;
+            });
+          },
+          items: frequencies.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
         ElevatedButton(
             key: const Key("CameraButton"),
             style: cameraStyle,
@@ -118,7 +143,7 @@ class _ItemDialogState extends State<ItemDialog> {
           onPressed: () {
             setState(() {
               widget.onListChanged(Item(
-                  name: billName, date: moment, payment: amount, image: img));
+                  name: billName, date: moment, payment: amount, image: img, frequency: dropdownValue));
               Navigator.pop(context);
             });
           },
