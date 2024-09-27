@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 class Item {
@@ -5,15 +6,11 @@ class Item {
   DateTime? date;
   double payment = 0.0;
   int? confirmationNumber = 0;
-  Image? image;
+  XFile? image;
 
   Item(
       {required this.name,
       required this.date,
       required this.payment,
       this.image});
-
-  void addImage(Image image) {
-    this.image = image;
-  }
 }

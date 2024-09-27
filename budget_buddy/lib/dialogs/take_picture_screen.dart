@@ -75,8 +75,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             //if the picture was taken, display it on a new screen.
             await Navigator.of(context).push(
               MaterialPageRoute(
-                  builder: (context) =>
-                      DisplayPictureScreen(imagePath: image.path)),
+                  builder: (context) => DisplayPictureScreen(image: image)),
             );
           } catch (e) {
             //if an error occurs, log the error to the console.
@@ -87,10 +86,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 }
 
 class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
+  final XFile image;
   // final Item item;
 
-  const DisplayPictureScreen({super.key, required this.imagePath});
+  const DisplayPictureScreen({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -98,13 +97,13 @@ class DisplayPictureScreen extends StatelessWidget {
         appBar: AppBar(title: const Text("Display the Picture")),
         body: Column(
           children: [
-            Image.file(File(imagePath)),
+            Image.file(File(image.path)),
             ElevatedButton(
                 onPressed: () {
                   //add image to item.
                   // item.addImagePath(I);
                   Navigator.pop(context); // pop the display picture screen
-                  Navigator.pop(context); // pop the take picture screen
+                  Navigator.pop(context, image); // pop the take picture screen
                 },
                 child: const Text("Confirm"))
           ],

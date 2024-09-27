@@ -39,7 +39,7 @@ class _ItemDialogState extends State<ItemDialog> {
   String textString = "";
   DateTime? moment = DateTime.now();
   double amount = 0.0;
-  Image? img;
+  XFile? img;
 
   @override
   Widget build(BuildContext context) {
@@ -87,16 +87,16 @@ class _ItemDialogState extends State<ItemDialog> {
             style: cameraStyle,
             child: const Text('Take Picture'),
             onPressed: () async {
-              showDialog(
+              final result = await showDialog<XFile>(
                   context: context,
                   builder: (_) {
                     return TakePictureScreen(
                         camera: widget.cam); // needs to return an image/path
                   });
+              img = result;
               setState(() {
                 textString = "image taken";
               });
-              ;
             }),
         Text(textString),
       ]),
@@ -118,10 +118,7 @@ class _ItemDialogState extends State<ItemDialog> {
           onPressed: () {
             setState(() {
               widget.onListChanged(Item(
-                  name: billName,
-                  date: DateTime.now(),
-                  payment: amount,
-                  image: img));
+                  name: billName, date: moment, payment: amount, image: img));
               Navigator.pop(context);
             });
           },

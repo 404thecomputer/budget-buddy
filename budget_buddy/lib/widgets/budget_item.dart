@@ -1,3 +1,4 @@
+import 'package:budget_buddy/dialogs/take_picture_screen.dart';
 import 'package:budget_buddy/objects/item.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -22,12 +23,20 @@ class BudgetItem extends StatelessWidget {
           // This might be the picture of the item
           backgroundColor: Colors.green,
         ),
-        subtitle: Text(
-            "${DateFormat('MM-dd-yy').format(item.date!)} | $fo"),
+        subtitle: Text("${DateFormat('MM-dd-yy').format(item.date!)} | $fo"),
+        onLongPress: () {
+          onDeleteItem(item);
+        },
         onTap: () {
           //open a dialog box
-
-          onDeleteItem(item);
+          if (item.image != null) {
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return DisplayPictureScreen(
+                      image: item.image!); // needs to return an image/path
+                });
+          }
         });
   }
 }
