@@ -130,7 +130,7 @@ class MainNavigatorState extends State<MainNavigator> {
 
   @override
   void initState() {
-    items = [Item(name: "Bill 5", date: DateTime.now(), payment: 150.0)];
+    items = [Item(name: "Bill 5", date: DateTime.now(), payment: 150.0, frequency: "Monthly")];
     super.initState();
   }
 

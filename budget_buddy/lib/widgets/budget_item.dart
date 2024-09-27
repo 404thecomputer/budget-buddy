@@ -18,15 +18,22 @@ class BudgetItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MoneyFormatter fmf = MoneyFormatter(amount: item.payment);
-
+    String pictureBool = "";
+    if (item.image == null) {
+      pictureBool = "No Image";
+    }
+    if (item.image != null) {
+      pictureBool = "Image Attached";
+    }
     String fo = fmf.output.symbolOnLeft;
+    String freq = item.frequency!;
     return ListTile(
         title: Text(item.name),
         leading: const CircleAvatar(
           // This might be the picture of the item
           backgroundColor: Colors.green,
         ),
-        subtitle: Text("${DateFormat('MM-dd-yy').format(item.date!)} | $fo"),
+        subtitle: Text("${DateFormat('MM-dd-yy').format(item.date!)} | $fo | $freq | $pictureBool"),
         onTap: () {
           //open a dialog box
           showDialog(
