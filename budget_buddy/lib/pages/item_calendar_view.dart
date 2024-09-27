@@ -9,14 +9,15 @@ import '../utils.dart';
 typedef ItemsListChangedCallback = Function(Item item);
 
 class ItemCalendarView extends StatefulWidget {
-  const ItemCalendarView(
-      {required this.items,
-      this.selectedDay,
-      required this.onDaySelected,
-      super.key,
-      required this.onListChanged,
-      required this.onDeleteItem,
-      required this.cam,});
+  const ItemCalendarView({
+    required this.items,
+    this.selectedDay,
+    required this.onDaySelected,
+    super.key,
+    required this.onListChanged,
+    required this.onDeleteItem,
+    required this.cam,
+  });
 
   final List<Item> items;
   final DateTime? selectedDay;
@@ -97,7 +98,8 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
           showDialog(
               context: context,
               builder: (_) {
-                return ItemDialog(onListChanged: widget.onListChanged, cam: widget.cam);
+                return ItemDialog(
+                    onListChanged: widget.onListChanged, cam: widget.cam);
               });
         },
         tooltip: "Add New Item",

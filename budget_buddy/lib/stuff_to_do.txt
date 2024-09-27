@@ -1,4 +1,3 @@
-Add payment amount to add bill dialog box
-Add date picker to dialog box
-Add camera function
-Add frequency
+Better frequency. More options, easier to read, etc. 
+Allow the input of checks. Maybe you can have a total balance that checks and bills will automatically update
+Put image on all frequency added items too. 

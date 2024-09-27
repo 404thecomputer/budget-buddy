@@ -8,7 +8,13 @@ import 'package:intl/intl.dart';
 
 // adapted from to-dont-list code
 typedef ItemsListChangedCallback = Function(Item item);
-const frequencies = <String>['No Repeat', 'Daily', 'Weekly', 'Biweekly', 'Monthly'];
+const frequencies = <String>[
+  'No Repeat',
+  'Daily',
+  'Weekly',
+  'Biweekly',
+  'Monthly'
+];
 
 class ItemDialog extends StatefulWidget {
   const ItemDialog({
@@ -19,7 +25,6 @@ class ItemDialog extends StatefulWidget {
 
   final ItemsListChangedCallback onListChanged;
   final CameraDescription cam;
-
 
   @override
   State<ItemDialog> createState() => _ItemDialogState();
@@ -87,12 +92,12 @@ class _ItemDialogState extends State<ItemDialog> {
         ),
         DropdownButton<String>(
           value: dropdownValue,
-          icon: const Icon(Icons.arrow_downward),
+          icon: const Icon(Icons.arrow_drop_down_outlined),
           elevation: 16,
-          style: const TextStyle(color: Colors.deepOrange),
+          style: const TextStyle(color: Colors.black),
           underline: Container(
             height: 2,
-            color: Colors.deepOrangeAccent,
+            color: Colors.black,
           ),
           onChanged: (String? value) {
             // This is called when the user selects an item.
@@ -143,7 +148,11 @@ class _ItemDialogState extends State<ItemDialog> {
           onPressed: () {
             setState(() {
               widget.onListChanged(Item(
-                  name: billName, date: moment, payment: amount, image: img, frequency: dropdownValue));
+                  name: billName,
+                  date: moment,
+                  payment: amount,
+                  image: img,
+                  frequency: dropdownValue));
               Navigator.pop(context);
             });
           },
