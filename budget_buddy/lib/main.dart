@@ -74,6 +74,7 @@ class MainNavigatorState extends State<MainNavigator> {
   void _handleNewItem(Item item) {
     setState(() {
       items.add(item);
+      items.sort((a, b) => a.date!.compareTo(b.date!));
     });
   }
 
@@ -95,9 +96,9 @@ class MainNavigatorState extends State<MainNavigator> {
 
   Widget returnScreen(int screenIndex) {
     if (screenIndex == 0) {
-    //   return TakePictureScreen(camera: widget.camera);
-    // }
-    // if (screenIndex == 1) {
+      //   return TakePictureScreen(camera: widget.camera);
+      // }
+      // if (screenIndex == 1) {
       return ItemCalendarView(
         items: items,
         selectedDay: selectedDay,
