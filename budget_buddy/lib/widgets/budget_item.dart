@@ -33,8 +33,7 @@ class BudgetItem extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (_) {
-                  return DisplayPictureScreen(
-                      image: item.image!); // needs to return an image/path
+                  return DisplayPictureScreen(image: item.image!);
                 });
           }
         });
