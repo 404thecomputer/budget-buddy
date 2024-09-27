@@ -5,16 +5,16 @@ import 'package:budget_buddy/objects/item.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:money_formatter/money_formatter.dart';
 
 typedef ItemsListDeletedCallback = Function(Item item);
 
 class InfoDialog extends StatefulWidget {
-  const InfoDialog({
-    super.key,
-    required this.item,
-    required this.onDeleteItem,
-    required this.cam
-  });
+  const InfoDialog(
+      {super.key,
+      required this.item,
+      required this.onDeleteItem,
+      required this.cam});
 
   final ItemsListDeletedCallback onDeleteItem;
   final Item item;
@@ -40,21 +40,16 @@ class _ItemDialogState extends State<InfoDialog> {
 
   @override
   Widget build(BuildContext context) {
+    MoneyFormatter fmf = MoneyFormatter(amount: widget.item.payment);
+    String fo = fmf.output.symbolOnLeft;
+
     return AlertDialog(
       title: const Text('Bill Information'),
       content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        Text(
-          "Name:${widget.item.name}"
-        ),
-        Text(
-          "Date:${widget.item.date}"
-        ),
-        Text(
-          "Amount:${widget.item.payment}"
-        ),
-        Text(
-          "Frequency:${widget.item.frequency}"
-        ),
+        Text("Name: ${widget.item.name}"),
+        Text("Date: ${DateFormat('MM-dd-yy').format(widget.item.date!)}"),
+        Text("Amount: $fo"),
+        Text("Frequency: ${widget.item.frequency}"),
         ElevatedButton(
             key: const Key("CameraButton2"),
             style: cameraStyle,
@@ -69,13 +64,13 @@ class _ItemDialogState extends State<InfoDialog> {
               }
               if (widget.item.image == null) {
                 final result = await showDialog<XFile>(
-                  context: context,
-                  builder: (_) {
-                    return TakePictureScreen(
-                        camera: widget.cam); // needs to return an image/path
-                  });
-              widget.item.image = result;
-              } 
+                    context: context,
+                    builder: (_) {
+                      return TakePictureScreen(
+                          camera: widget.cam); // needs to return an image/path
+                    });
+                widget.item.image = result;
+              }
             }),
       ]),
       actions: <Widget>[
