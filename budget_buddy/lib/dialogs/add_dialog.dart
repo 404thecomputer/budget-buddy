@@ -32,8 +32,8 @@ class _ItemDialogState extends State<ItemDialog> {
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green);
-  final ButtonStyle cameraStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20));
+  final ButtonStyle cameraStyle =
+      ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
   String billName = "";
   String textString = "";
@@ -41,64 +41,65 @@ class _ItemDialogState extends State<ItemDialog> {
   double amount = 0.0;
   Image? img;
 
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Add New Item'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          TextField(
-            onChanged: (value) {
-              setState(() {
-                billName = value;
-              });
-            },
-            controller: _nameInputController,
-            decoration: const InputDecoration(labelText: "Bill Name"),
-          ),
-          // Date Picker in flutter, https://levelup.gitconnected.com/date-picker-in-flutter-ec6080f3508a
-          TextField(
-            onTap: () async {
-              moment = await showDatePicker(
-                context: context,
-                initialDate: DateTime(2000),
-                firstDate: DateTime.now(),
-                lastDate: DateTime(2101),
-              );
-              setState(() {
-                _dateInputController.text = DateFormat.yMMMMd('en_US').format(moment!);
-              });
-            },
-            controller: _dateInputController,
-            decoration: const InputDecoration(labelText: "Date"),
-            readOnly: true,
-          ),
-          TextField(
-            onChanged: (valueAmount) {
-              setState(() {
-                amount = double.parse(valueAmount);
-              });
-            },
-            controller: _amountInputController,
-            decoration: const InputDecoration(labelText: "Amount"),
-          ),
-          ElevatedButton(
+      content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        TextField(
+          onChanged: (value) {
+            setState(() {
+              billName = value;
+            });
+          },
+          controller: _nameInputController,
+          decoration: const InputDecoration(labelText: "Bill Name"),
+        ),
+        // Date Picker in flutter, https://levelup.gitconnected.com/date-picker-in-flutter-ec6080f3508a
+        TextField(
+          onTap: () async {
+            moment = await showDatePicker(
+              context: context,
+              // initialDate: DateTime(2000),
+              firstDate: DateTime.now(),
+              lastDate: DateTime(2101),
+            );
+            setState(() {
+              _dateInputController.text =
+                  DateFormat.yMMMMd('en_US').format(moment!);
+            });
+          },
+          controller: _dateInputController,
+          decoration: const InputDecoration(labelText: "Date"),
+          readOnly: true,
+        ),
+        TextField(
+          onChanged: (valueAmount) {
+            setState(() {
+              amount = double.parse(valueAmount);
+            });
+          },
+          controller: _amountInputController,
+          decoration: const InputDecoration(labelText: "Amount"),
+        ),
+        ElevatedButton(
             key: const Key("CameraButton"),
             style: cameraStyle,
             child: const Text('Take Picture'),
             onPressed: () async {
-              TakePictureScreen(camera: widget.cam); // needs to return an image/path
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return TakePictureScreen(
+                        camera: widget.cam); // needs to return an image/path
+                  });
               setState(() {
-                // img = ; // needs to be set to said path
-                textString = "Picture taken.";
+                textString = "image taken";
               });
-            }
-          ),
-          Text(textString),
-        ]
-      ),   
+              ;
+            }),
+        Text(textString),
+      ]),
       actions: <Widget>[
         ElevatedButton(
           key: const Key("CancelButton"),
@@ -116,8 +117,11 @@ class _ItemDialogState extends State<ItemDialog> {
           child: const Text('OK'),
           onPressed: () {
             setState(() {
-              widget.onListChanged(
-                  Item(name: billName, date: DateTime.now(), payment: amount, image: img));
+              widget.onListChanged(Item(
+                  name: billName,
+                  date: DateTime.now(),
+                  payment: amount,
+                  image: img));
               Navigator.pop(context);
             });
           },

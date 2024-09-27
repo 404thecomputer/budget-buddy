@@ -1,11 +1,13 @@
 import 'dart:io';
-
+import 'dart:ui';
+import 'package:budget_buddy/objects/item.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({super.key, required this.camera});
 
+  // final Item item;
   final CameraDescription camera;
   @override
   State<StatefulWidget> createState() {
@@ -86,14 +88,26 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
+  // final Item item;
 
   const DisplayPictureScreen({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Display the Picture")),
-      body: Image.file(File(imagePath)),
-    );
+        appBar: AppBar(title: const Text("Display the Picture")),
+        body: Column(
+          children: [
+            Image.file(File(imagePath)),
+            ElevatedButton(
+                onPressed: () {
+                  //add image to item.
+                  // item.addImagePath(I);
+                  Navigator.pop(context); // pop the display picture screen
+                  Navigator.pop(context); // pop the take picture screen
+                },
+                child: const Text("Confirm"))
+          ],
+        ));
   }
 }

@@ -12,4 +12,8 @@ class Item {
       required this.date,
       required this.payment,
       this.image});
+
+  void addImage(Image image) {
+    this.image = image;
+  }
 }

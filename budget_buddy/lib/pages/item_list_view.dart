@@ -51,7 +51,8 @@ class ItemListViewState extends State<ItemListView> {
           showDialog(
               context: context,
               builder: (_) {
-                return ItemDialog(onListChanged: widget.onListChanged, cam: widget.cam);
+                return ItemDialog(
+                    onListChanged: widget.onListChanged, cam: widget.cam);
               });
 
           //temp function. will be replaced when dialog windows are made.
