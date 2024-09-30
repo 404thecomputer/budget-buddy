@@ -24,7 +24,7 @@ class ItemCalendarView extends StatefulWidget {
   final Function(DateTime, DateTime) onDaySelected;
   final ItemsListChangedCallback onListChanged;
   final ItemsListDeletedCallback onDeleteItem;
-  final CameraDescription cam;
+  final cam;
 
   @override
   _ItemCalendarViewState createState() => _ItemCalendarViewState();

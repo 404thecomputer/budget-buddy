@@ -18,7 +18,7 @@ class ItemListView extends StatefulWidget {
   final List<Item> items;
   final ItemsListChangedCallback onListChanged;
   final ItemsListDeletedCallback onDeleteItem;
-  final CameraDescription cam;
+  final cam;
 
   @override
   State<StatefulWidget> createState() {
@@ -41,10 +41,7 @@ class ItemListViewState extends State<ItemListView> {
           final item = widget.items[index];
 
           return BudgetItem(
-            item: item,
-            onDeleteItem: widget.onDeleteItem,
-            cam: widget.cam
-          );
+              item: item, onDeleteItem: widget.onDeleteItem, cam: widget.cam);
         },
       ),
       floatingActionButton: FloatingActionButton(

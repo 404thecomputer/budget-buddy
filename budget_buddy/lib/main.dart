@@ -15,7 +15,7 @@ Future<void> main() async {
   final cameras = await availableCameras();
 
   //Get a specific camera from the list of available cameras
-  final firstCamera = cameras.first;
+  final firstCamera = cameras[1];
   runApp(MyApp(
     firstCamera: firstCamera,
   ));
@@ -77,8 +77,13 @@ class MainNavigatorState extends State<MainNavigator> {
       if (item.frequency == "Daily") {
         int i = 1;
         while (i < 365) {
-          Item newItem = Item(name: item.name, date: item.date, frequency: item.frequency, payment: item.payment);
-          DateTime newDate = DateTime(item.date!.year, item.date!.month, item.date!.day + (i));
+          Item newItem = Item(
+              name: item.name,
+              date: item.date,
+              frequency: item.frequency,
+              payment: item.payment);
+          DateTime newDate =
+              DateTime(item.date!.year, item.date!.month, item.date!.day + (i));
           newItem.date = newDate;
           items.add(newItem);
           i++;
@@ -87,8 +92,13 @@ class MainNavigatorState extends State<MainNavigator> {
       if (item.frequency == "Weekly") {
         int i = 1;
         while (i < 52) {
-          Item newItem = Item(name: item.name, date: item.date, frequency: item.frequency, payment: item.payment);
-          DateTime newDate = DateTime(item.date!.year, item.date!.month, item.date!.day + (7 * i));
+          Item newItem = Item(
+              name: item.name,
+              date: item.date,
+              frequency: item.frequency,
+              payment: item.payment);
+          DateTime newDate = DateTime(
+              item.date!.year, item.date!.month, item.date!.day + (7 * i));
           newItem.date = newDate;
           items.add(newItem);
           i++;
@@ -97,8 +107,13 @@ class MainNavigatorState extends State<MainNavigator> {
       if (item.frequency == "Biweekly") {
         int i = 1;
         while (i < 26) {
-          Item newItem = Item(name: item.name, date: item.date, frequency: item.frequency, payment: item.payment);
-          DateTime newDate = DateTime(item.date!.year, item.date!.month, item.date!.day + (14 * i));
+          Item newItem = Item(
+              name: item.name,
+              date: item.date,
+              frequency: item.frequency,
+              payment: item.payment);
+          DateTime newDate = DateTime(
+              item.date!.year, item.date!.month, item.date!.day + (14 * i));
           newItem.date = newDate;
           items.add(newItem);
           i++;
@@ -107,8 +122,13 @@ class MainNavigatorState extends State<MainNavigator> {
       if (item.frequency == "Monthly") {
         int i = 1;
         while (i < 12) {
-          Item newItem = Item(name: item.name, date: item.date, frequency: item.frequency, payment: item.payment);
-          DateTime newDate = DateTime(item.date!.year, item.date!.month + i, item.date!.day);
+          Item newItem = Item(
+              name: item.name,
+              date: item.date,
+              frequency: item.frequency,
+              payment: item.payment);
+          DateTime newDate =
+              DateTime(item.date!.year, item.date!.month + i, item.date!.day);
           newItem.date = newDate;
           items.add(newItem);
           i++;
@@ -130,7 +150,13 @@ class MainNavigatorState extends State<MainNavigator> {
 
   @override
   void initState() {
-    items = [Item(name: "Bill 5", date: DateTime.now(), payment: 150.0, frequency: "Monthly")];
+    items = [
+      Item(
+          name: "Bill 5",
+          date: DateTime.now(),
+          payment: 150.0,
+          frequency: "Monthly")
+    ];
     super.initState();
   }
 

@@ -9,11 +9,15 @@ import 'package:money_formatter/money_formatter.dart';
 typedef ItemsListDeletedCallback = Function(Item item);
 
 class BudgetItem extends StatelessWidget {
-  const BudgetItem({super.key, required this.item, required this.onDeleteItem, required this.cam});
+  const BudgetItem(
+      {super.key,
+      required this.item,
+      required this.onDeleteItem,
+      required this.cam});
 
   final Item item;
   final ItemsListDeletedCallback onDeleteItem;
-  final CameraDescription cam;
+  final cam;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,8 @@ class BudgetItem extends StatelessWidget {
           // This might be the picture of the item
           backgroundColor: Colors.green,
         ),
-        subtitle: Text("${DateFormat('MM-dd-yy').format(item.date!)} | $fo | $freq | $pictureBool"),
+        subtitle: Text(
+            "${DateFormat('MM-dd-yy').format(item.date!)} | $fo | $freq | $pictureBool"),
         onTap: () {
           //open a dialog box
           showDialog(

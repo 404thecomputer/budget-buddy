@@ -18,7 +18,7 @@ class InfoDialog extends StatefulWidget {
 
   final ItemsListDeletedCallback onDeleteItem;
   final Item item;
-  final CameraDescription cam;
+  final cam;
 
   @override
   State<InfoDialog> createState() => _ItemDialogState();

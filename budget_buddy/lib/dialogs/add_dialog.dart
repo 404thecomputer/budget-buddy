@@ -24,7 +24,7 @@ class ItemDialog extends StatefulWidget {
   });
 
   final ItemsListChangedCallback onListChanged;
-  final CameraDescription cam;
+  final cam;
 
   @override
   State<ItemDialog> createState() => _ItemDialogState();
