@@ -7,6 +7,7 @@
 
 import 'package:budget_buddy/dialogs/add_dialog.dart';
 import 'package:budget_buddy/objects/item.dart';
+import 'package:budget_buddy/pages/item_calendar_view.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
 import 'package:budget_buddy/widgets/budget_item.dart';
 import 'package:camera/camera.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:budget_buddy/main.dart';
+import 'package:money_formatter/money_formatter.dart';
 
 void main() {
   // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -32,6 +34,25 @@ void main() {
   //   expect(find.text('0'), findsNothing);
   //   expect(find.text('1'), findsOneWidget);
   // });
+
+  testWidgets('Clicking button shows CalendarView',
+      (WidgetTester tester) async {
+    //Get a specific camera from the list of available cameras
+    //final firstCamera = cameras.first;
+
+    // await tester.pumpWidget(MainNavigator(camera: Placeholder()));
+    await tester.pumpWidget(const MaterialApp(
+        home: Scaffold(body: MainNavigator(camera: Placeholder()))));
+
+    final textFinder = find.text("Calendar View");
+
+    expect(textFinder, findsOne);
+
+    await tester.tap(textFinder);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ItemCalendarView), findsOne);
+  });
 
   testWidgets('Clicking button shows listView', (WidgetTester tester) async {
     //Get a specific camera from the list of available cameras
@@ -88,15 +109,23 @@ void main() {
     final floatingButtonFinder = find.byType(FloatingActionButton);
     await tester.tap(floatingButtonFinder);
     await tester.pumpAndSettle();
-    textFinder = find.text("Bill Name");
-    tester.enterText(textFinder, "Visa");
-    //Date uses a date picker so i don't have to test that
-    textFinder = find.text("Amount");
-    tester.enterText(textFinder, "700");
+    await tester.enterText(find.byKey(const Key("BillNameTextField")), "Visa");
+    // //Date uses a date picker so i don't have to test that
+    await tester.enterText(find.byKey(const Key("AmountTextField")), "700");
     final buttonFinder = find.byKey(const Key("OKButton"));
-    tester.tap(buttonFinder);
-    tester.pumpAndSettle();
+    await tester.tap(buttonFinder);
+    await tester.pumpAndSettle();
 
     // textFinder = find.text(text)
+    final nameFinder = find.text("Visa");
+
+    Item item = Item(name: "name", date: DateTime(2022), payment: 700);
+    MoneyFormatter fmf = MoneyFormatter(amount: item.payment);
+    String fo = fmf.output.symbolOnLeft;
+    final amountFinder = find.textContaining(fo);
+
+    expect(find.byType(BudgetItem), findsNWidgets(2));
+    expect(nameFinder, findsOne);
+    expect(amountFinder, findsOne);
   });
 }

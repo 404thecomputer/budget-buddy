@@ -55,6 +55,7 @@ class _ItemDialogState extends State<ItemDialog> {
       title: const Text('Add New Item'),
       content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
         TextField(
+          key: const Key("BillNameTextField"),
           onChanged: (value) {
             setState(() {
               billName = value;
@@ -82,6 +83,7 @@ class _ItemDialogState extends State<ItemDialog> {
           readOnly: true,
         ),
         TextField(
+          key: const Key("AmountTextField"),
           onChanged: (valueAmount) {
             setState(() {
               amount = double.parse(valueAmount);
