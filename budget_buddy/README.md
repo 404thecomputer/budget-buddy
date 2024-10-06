@@ -1,8 +1,10 @@
-# budget_buddy
+# Budget Buddy
 
-A new Flutter project.
+An app that can help track bills using the camera sensor in Flutter. 
 
-## Getting Started
+## About This App
+
+This app is for the everyday consumer who might be struggling to keep track of all the bills they need to pay. 
 
 This project is a starting point for a Flutter application.
 

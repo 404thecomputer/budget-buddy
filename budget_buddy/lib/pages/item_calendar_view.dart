@@ -3,7 +3,6 @@ import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:camera/camera.dart';
 import '../utils.dart';
 
 typedef ItemsListChangedCallback = Function(Item item);

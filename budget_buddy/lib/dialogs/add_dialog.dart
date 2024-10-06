@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:budget_buddy/dialogs/take_picture_screen.dart';
 import 'package:budget_buddy/objects/item.dart';
 import 'package:camera/camera.dart';

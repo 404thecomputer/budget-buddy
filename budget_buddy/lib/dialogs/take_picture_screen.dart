@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
-import 'package:budget_buddy/objects/item.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 

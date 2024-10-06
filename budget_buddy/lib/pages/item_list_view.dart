@@ -1,7 +1,6 @@
 import 'package:budget_buddy/dialogs/add_dialog.dart';
 import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/widgets/budget_item.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 typedef ItemsListChangedCallback = Function(Item item);

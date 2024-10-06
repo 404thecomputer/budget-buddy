@@ -1,7 +1,5 @@
 import 'package:budget_buddy/dialogs/info_dialog.dart';
-import 'package:budget_buddy/dialogs/take_picture_screen.dart';
 import 'package:budget_buddy/objects/item.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_formatter/money_formatter.dart';
