@@ -18,7 +18,7 @@ Each item will display its name, date, amount, and frequency. Tapping on an item
 ![List View](https://github.com/404thecomputer/budget-buddy/blob/main/budget_buddy/images/listview.png)
 ![Info Dialog](https://github.com/404thecomputer/budget-buddy/blob/main/budget_buddy/images/infoDialog.png)
 
-### Adding a new bill
+## Adding a new bill
 Tapping the floating action button opens a dialog for adding bills. You can enter in a name and numerical amount and select the date and frequency of the bill. There is a button which opens up the camera, where you can take a picture of the bill, saving it to the bill item to be viewed when you tap the bill in the list view. 
 
 ![Add Dialog](https://github.com/404thecomputer/budget-buddy/blob/main/budget_buddy/images/addDialog.png)
