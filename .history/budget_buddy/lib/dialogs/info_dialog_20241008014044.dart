@@ -77,11 +77,7 @@ class _ItemDialogState extends State<InfoDialog> {
           style: noStyle,
           child: const Text('Delete Bill'),
           onPressed: () {
-            showDialog(
-              context: context, 
-              builder: (_) {
-                return DeleteDialog(item: widget.item, onDeleteItem: widget.onDeleteItem);
-              });
+            DeleteDialog(item: widget.item, onDeleteItem: widget.onDeleteItem);
           },
         ),
         ElevatedButton(
