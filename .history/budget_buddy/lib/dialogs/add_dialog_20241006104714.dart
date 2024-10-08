@@ -3,7 +3,6 @@ import 'package:budget_buddy/objects/item.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:budget_buddy/widgets/buttons.dart';
 
 // adapted from to-dont-list code
 typedef ItemsListChangedCallback = Function(Item item);
@@ -34,6 +33,10 @@ class _ItemDialogState extends State<ItemDialog> {
   final TextEditingController _nameInputController = TextEditingController();
   final TextEditingController _dateInputController = TextEditingController();
   final TextEditingController _amountInputController = TextEditingController();
+  final ButtonStyle noStyle = ElevatedButton.styleFrom(
+      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
+  final ButtonStyle yesStyle = ElevatedButton.styleFrom(
+      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green);
   final ButtonStyle cameraStyle =
       ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
@@ -128,8 +131,9 @@ class _ItemDialogState extends State<ItemDialog> {
         Text(textString),
       ]),
       actions: <Widget>[
-        EvilButton(
+        ElevatedButton(
           key: const Key("CancelButton"),
+          style: noStyle,
           child: const Text('Cancel'),
           onPressed: () {
             setState(() {
@@ -137,8 +141,9 @@ class _ItemDialogState extends State<ItemDialog> {
             });
           },
         ),
-        GoodButton(
+        ElevatedButton(
           key: const Key("OKButton"),
+          style: yesStyle,
           child: const Text('OK'),
           onPressed: () {
             setState(() {
