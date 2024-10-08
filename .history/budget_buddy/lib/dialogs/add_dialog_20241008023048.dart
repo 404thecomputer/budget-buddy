@@ -138,7 +138,7 @@ class _ItemDialogState extends State<ItemDialog> {
               });
             },
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           GoodButton(
             key: const Key("OKButton"),
             child: const Text('OK'),

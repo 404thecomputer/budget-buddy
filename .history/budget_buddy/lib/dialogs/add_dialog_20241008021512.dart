@@ -128,33 +128,30 @@ class _ItemDialogState extends State<ItemDialog> {
         Text(textString),
       ]),
       actions: <Widget>[
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          EvilButton(
-            key: const Key("CancelButton"),
-            child: const Text('Cancel'),
-            onPressed: () {
-              setState(() {
-                Navigator.pop(context);
-              });
-            },
-          ),
-          const SizedBox(width: 10),
-          GoodButton(
-            key: const Key("OKButton"),
-            child: const Text('OK'),
-            onPressed: () {
-              setState(() {
-                widget.onListChanged(Item(
-                    name: billName,
-                    date: moment,
-                    payment: amount,
-                    image: img,
-                    frequency: dropdownValue));
-                Navigator.pop(context);
-              });
-            },
-          ),
-        ]),
+        EvilButton(
+          key: const Key("CancelButton"),
+          child: const Text('Cancel'),
+          onPressed: () {
+            setState(() {
+              Navigator.pop(context);
+            });
+          },
+        ),
+        GoodButton(
+          key: const Key("OKButton"),
+          child: const Text('OK'),
+          onPressed: () {
+            setState(() {
+              widget.onListChanged(Item(
+                  name: billName,
+                  date: moment,
+                  payment: amount,
+                  image: img,
+                  frequency: dropdownValue));
+              Navigator.pop(context);
+            });
+          },
+        ),
       ],
     );
   }

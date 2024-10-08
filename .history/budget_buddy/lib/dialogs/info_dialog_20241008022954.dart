@@ -81,7 +81,7 @@ class _ItemDialogState extends State<InfoDialog> {
                 });
             },
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 10),
           GoodButton(
             key: const Key("CloseButton"),
             child: const Text('Close'),
@@ -130,7 +130,7 @@ class _DeleteDialogState extends State<DeleteDialog> {
               Navigator.pop(context);
             },
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 10),
           GoodButton(
             key: const Key("Dontlete"),
             child: const Text('No'),

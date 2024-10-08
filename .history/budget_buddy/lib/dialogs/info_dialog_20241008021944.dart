@@ -69,29 +69,26 @@ class _ItemDialogState extends State<InfoDialog> {
             }),
       ]),
       actions: <Widget>[
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          EvilButton(
-            key: const Key("DeleteButton"),
-            child: const Text('Delete Bill'),
-            onPressed: () {
-              showDialog(
-                context: context, 
-                builder: (_) {
-                  return DeleteDialog(item: widget.item, onDeleteItem: widget.onDeleteItem);
-                });
-            },
-          ),
-          const SizedBox(width: 8),
-          GoodButton(
-            key: const Key("CloseButton"),
-            child: const Text('Close'),
-            onPressed: () {
-              setState(() {
-                Navigator.pop(context);
+        EvilButton(
+          key: const Key("DeleteButton"),
+          child: const Text('Delete Bill'),
+          onPressed: () {
+            showDialog(
+              context: context, 
+              builder: (_) {
+                return DeleteDialog(item: widget.item, onDeleteItem: widget.onDeleteItem);
               });
-            },
-          ),
-        ]),
+          },
+        ),
+        GoodButton(
+          key: const Key("CloseButton"),
+          child: const Text('Close'),
+          onPressed: () {
+            setState(() {
+              Navigator.pop(context);
+            });
+          },
+        ),
       ],
     );
   }
@@ -120,28 +117,25 @@ class _DeleteDialogState extends State<DeleteDialog> {
         Text("This cannot be undone."),
       ]),
       actions: <Widget>[
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          EvilButton(
-            key: const Key("Delete"),
-            child: const Text('Yes'),
-            onPressed: () {
-              widget.onDeleteItem(widget.item);
+        EvilButton(
+          key: const Key("Delete"),
+          child: const Text('Yes'),
+          onPressed: () {
+            widget.onDeleteItem(widget.item);
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        ),
+        GoodButton(
+          key: const Key("Dontlete"),
+          child: const Text('No'),
+          onPressed: () {
+            setState(() {
               Navigator.pop(context);
               Navigator.pop(context);
-            },
-          ),
-          const SizedBox(width: 8),
-          GoodButton(
-            key: const Key("Dontlete"),
-            child: const Text('No'),
-            onPressed: () {
-              setState(() {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              });
-            },
-          ),
-        ]) 
+            });
+          },
+        ),
       ],
     );
   }

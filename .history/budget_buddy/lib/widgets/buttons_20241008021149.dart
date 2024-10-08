@@ -23,7 +23,7 @@ class GoodButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ElevatedButton(
         style: ElevatedButton.styleFrom(
-            textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green, foregroundColor: Colors.white),
+            textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green),
         onPressed: onPressed,
         child: child,
       );
