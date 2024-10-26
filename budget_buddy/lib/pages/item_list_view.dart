@@ -1,4 +1,5 @@
 import 'package:budget_buddy/dialogs/add_dialog.dart';
+import 'package:budget_buddy/dialogs/delete.dialog.dart';
 import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/widgets/budget_item.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,8 @@ class ItemListViewState extends State<ItemListView> {
               item: item, onDeleteItem: widget.onDeleteItem, cam: widget.cam);
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      persistentFooterButtons: [
+      FloatingActionButton(
         onPressed: () {
           showDialog(
               context: context,
@@ -57,6 +59,21 @@ class ItemListViewState extends State<ItemListView> {
         tooltip: "Add New Item",
         child: const Icon(Icons.add),
       ),
+      FloatingActionButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (_) {
+                return DeleteAll(
+                    itemsToDelete: widget.items, onDeleteItem: widget.onDeleteItem,);
+              });
+
+          //temp function. will be replaced when dialog windows are made.
+        },
+        tooltip: "Delete item(s)",
+        child: const Icon(Icons.remove),
+      ),
+      ],
     );
   }
 }
