@@ -25,8 +25,11 @@ class _DeleteAllState extends State<DeleteAll> {
 
   @override
   Widget build(BuildContext context) {
+    //chose an AlertDialog for ease of use and for style consistency
     return AlertDialog(
       title: const Center(child: Text('Delete All Items?')),
+
+      //has cancel button and ok button using the buttons widgets
       actions: <Widget>[
         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           EvilButton(
