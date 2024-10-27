@@ -13,8 +13,6 @@ class DeleteAll extends StatefulWidget{
 
 
 
-
-
   @override
   State<DeleteAll> createState() => _DeleteAllState();
 }
@@ -23,9 +21,11 @@ class _DeleteAllState extends State<DeleteAll> {
 
   @override
   Widget build(BuildContext context) {
+    //chose an AlertDialog for ease of use and for style consistency
     return AlertDialog(
       title: const Center(child: Text('Delete All Items?')),
 
+      //has cancel button and ok button using the buttons widgets
       actions: <Widget>[
         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           EvilButton(
@@ -43,8 +43,10 @@ class _DeleteAllState extends State<DeleteAll> {
             child: const Text('OK'),
             onPressed: () {
               setState(() {
-                for(var item in widget.itemsToDelete){
-                widget.onDeleteItem(item); }
+                //while loop that deletes items by checking if the list is empty after deleting the first item
+                while(widget.itemsToDelete.isNotEmpty){
+                  widget.onDeleteItem(widget.itemsToDelete.first);
+                }
                 Navigator.pop(context);
               });
             },

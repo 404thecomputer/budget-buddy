@@ -44,6 +44,7 @@ class ItemListViewState extends State<ItemListView> {
               item: item, onDeleteItem: widget.onDeleteItem, cam: widget.cam);
         },
       ),
+      //Changed floatingActionButton to persistentFooterButtons in order to have a delete button next to the add button
       persistentFooterButtons: [
       FloatingActionButton(
         onPressed: () {
@@ -59,11 +60,14 @@ class ItemListViewState extends State<ItemListView> {
         tooltip: "Add New Item",
         child: const Icon(Icons.add),
       ),
+
+      //This is the new delete button
       FloatingActionButton(
         onPressed: () {
           showDialog(
               context: context,
               builder: (_) {
+                //created a dialog "DeleteAll" that requires a list of items and onDeleteItem
                 return DeleteAll(
                     itemsToDelete: widget.items, onDeleteItem: widget.onDeleteItem,);
               });
