@@ -4,12 +4,14 @@ import 'package:budget_buddy/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 
 class DeleteAll extends StatefulWidget{
-  DeleteAll({super.key, required this.itemsToDelete, required this.onDeleteItem});
+  DeleteAll({super.key, required this.itemsToDelete, required this.onDeleteItem, required this.selected});
 
 
   List<Item> itemsToDelete;
 
   final ItemsListDeletedCallback onDeleteItem;
+
+  List<bool> selected;
 
 
 
@@ -25,7 +27,6 @@ class _DeleteAllState extends State<DeleteAll> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Center(child: Text('Delete All Items?')),
-
       actions: <Widget>[
         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           EvilButton(
@@ -43,8 +44,12 @@ class _DeleteAllState extends State<DeleteAll> {
             child: const Text('OK'),
             onPressed: () {
               setState(() {
-                for(var item in widget.itemsToDelete){
-                widget.onDeleteItem(item); }
+                int i = 0;
+                while(i < widget.itemsToDelete.length){
+                  if(widget.selected[i] == false){
+                    widget.onDeleteItem(widget.itemsToDelete[i]);
+                  }
+                }
                 Navigator.pop(context);
               });
             },

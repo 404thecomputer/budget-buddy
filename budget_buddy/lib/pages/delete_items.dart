@@ -1,35 +1,42 @@
 import 'package:budget_buddy/dialogs/add_dialog.dart';
 import 'package:budget_buddy/dialogs/delete.dialog.dart';
 import 'package:budget_buddy/objects/item.dart';
-import 'package:budget_buddy/pages/delete_items.dart';
 import 'package:budget_buddy/widgets/budget_item.dart';
 import 'package:flutter/material.dart';
-
 typedef ItemsListChangedCallback = Function(Item item);
 typedef ItemsListDeletedCallback = Function(Item item);
 
-class ItemListView extends StatefulWidget {
-  const ItemListView(
+class DeleteItemListView extends StatefulWidget {
+  DeleteItemListView(
       {super.key,
       required this.items,
-      required this.onListChanged,
-      required this.onDeleteItem,
-      required this.cam});
+      required this.onDeleteItem,});
 
   final List<Item> items;
-  final ItemsListChangedCallback onListChanged;
   final ItemsListDeletedCallback onDeleteItem;
-  final cam;
+  List<bool> selected = [];
+
+  
+
 
   @override
   State<StatefulWidget> createState() {
-    return ItemListViewState();
+    return DeleteItemListViewState();
   }
 }
 
-class ItemListViewState extends State<ItemListView> {
+class DeleteItemListViewState extends State<DeleteItemListView> {
+  void setSelected(List<bool> selected, List<Item> items){
+    for(var item in items){
+      selected.add(false);
+    }
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
+    setSelected(widget.selected, widget.items);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Budget Buddy"),
@@ -41,40 +48,35 @@ class ItemListViewState extends State<ItemListView> {
         itemBuilder: (BuildContext context, int index) {
           final item = widget.items[index];
 
-          return BudgetItem(
-              item: item, onDeleteItem: widget.onDeleteItem, cam: widget.cam);
+          return ListTile(
+            title: Text(widget.items[index].name),
+            leading: Checkbox(
+              value: widget.selected[index],
+              onChanged: (bool? value) {
+                setState(() {
+                  widget.selected[index] = value as bool;
+                });
+              },
+            ),
+          );
         },
       ),
-      persistentFooterButtons: [
-      FloatingActionButton(
+     
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
               context: context,
               builder: (_) {
-                return ItemDialog(
-                    onListChanged: widget.onListChanged, cam: widget.cam);
+                return DeleteAll(
+                    itemsToDelete: widget.items, onDeleteItem: widget.onDeleteItem, selected: widget.selected,);
               });
 
           //temp function. will be replaced when dialog windows are made.
-        },
-        tooltip: "Add New Item",
-        child: const Icon(Icons.add),
-      ),
-      FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DeleteItemListView(items: widget.items, onDeleteItem: widget.onDeleteItem)
-            )
-          );
-
-          //temp function. will be replaced when dialog windows are made.
+          Navigator.pop;
         },
         tooltip: "Delete item(s)",
         child: const Icon(Icons.remove),
       ),
-      ],
     );
   }
 }
