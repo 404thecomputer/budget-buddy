@@ -41,9 +41,10 @@ class DeleteItemListViewState extends State<DeleteItemListView> {
       appBar: AppBar(
         title: const Text("Budget Buddy"),
         centerTitle: true,
+        leading: BackButton()
       ),
       body: ListView.builder(
-        restorationId: 'sampleItemListView',
+        restorationId: 'DeleteItemListView',
         itemCount: widget.items.length,
         itemBuilder: (BuildContext context, int index) {
           final item = widget.items[index];
@@ -65,14 +66,15 @@ class DeleteItemListViewState extends State<DeleteItemListView> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
+            
               context: context,
               builder: (_) {
                 return DeleteAll(
                     itemsToDelete: widget.items, onDeleteItem: widget.onDeleteItem, selected: widget.selected,);
+                    
               });
+              
 
-          //temp function. will be replaced when dialog windows are made.
-          Navigator.pop;
         },
         tooltip: "Delete item(s)",
         child: const Icon(Icons.remove),

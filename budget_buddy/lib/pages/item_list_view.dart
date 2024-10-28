@@ -72,10 +72,11 @@ class ItemListViewState extends State<ItemListView> {
             )
           );
 
-          //temp function. will be replaced when dialog windows are made.
         },
         tooltip: "Delete item(s)",
+        heroTag: null,
         child: const Icon(Icons.remove),
+        
       ),
       ],
     );

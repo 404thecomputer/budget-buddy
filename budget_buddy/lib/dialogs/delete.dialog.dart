@@ -28,7 +28,7 @@ class _DeleteAllState extends State<DeleteAll> {
     //chose an AlertDialog for ease of use and for style consistency
     return AlertDialog(
       title: const Center(child: Text('Delete All Items?')),
-
+  
       //has cancel button and ok button using the buttons widgets
       actions: <Widget>[
         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
@@ -49,10 +49,15 @@ class _DeleteAllState extends State<DeleteAll> {
               setState(() {
                 int i = 0;
                 while(i < widget.itemsToDelete.length){
-                  if(widget.selected[i] == false){
+                  if(widget.selected[i] == true){
                     widget.onDeleteItem(widget.itemsToDelete[i]);
+                    widget.selected.removeAt(i);
+                  }
+                  else{
+                  i ++;
                   }
                 }
+                Navigator.pop(context);
                 Navigator.pop(context);
               });
             },
