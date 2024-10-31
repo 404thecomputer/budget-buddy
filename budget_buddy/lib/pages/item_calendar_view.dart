@@ -1,4 +1,5 @@
 import 'package:budget_buddy/dialogs/add_dialog.dart';
+import 'package:budget_buddy/main.dart';
 import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
 import 'package:flutter/material.dart';
@@ -36,15 +37,16 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
 
   @override
   Widget build(BuildContext context) {
+    String totalStr = getBalance().toStringAsFixed(2);
     return Scaffold(
      appBar: AppBar(
-          title: const Row(
+          title: Row(
             children: <Widget>[
                 Text(
                 'Budget Buddy',
                 ),
                 Spacer(),
-              Text("My Balance: "),
+              Text("My Balance: \$$totalStr"),
             ]
            )
       ),
