@@ -38,7 +38,7 @@ class ItemListViewState extends State<ItemListView> {
                 'Budget Buddy',
                 ),
                 Spacer(),
-              Text("My Balance: \$$totalStr"),
+              Text("My Bills: \$$totalStr"),
             ]
            )
       ),
