@@ -30,8 +30,15 @@ class ItemListViewState extends State<ItemListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Budget Buddy"),
-        centerTitle: true,
+          title: const Row(
+            children: <Widget>[
+                Text(
+                'Budget Buddy',
+                ),
+                Spacer(),
+              Text("My Balance: "),
+            ]
+           )
       ),
       body: ListView.builder(
         restorationId: 'sampleItemListView',

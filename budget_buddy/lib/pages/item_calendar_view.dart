@@ -37,9 +37,16 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Budget Buddy"),
-        centerTitle: true,
+     appBar: AppBar(
+          title: const Row(
+            children: <Widget>[
+                Text(
+                'Budget Buddy',
+                ),
+                Spacer(),
+              Text("My Balance: "),
+            ]
+           )
       ),
       body: TableCalendar(
         shouldFillViewport: true,
