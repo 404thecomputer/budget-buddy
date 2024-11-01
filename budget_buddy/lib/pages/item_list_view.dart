@@ -1,5 +1,7 @@
 import 'package:budget_buddy/dialogs/add_dialog.dart';
+import 'package:budget_buddy/dialogs/delete.dialog.dart';
 import 'package:budget_buddy/objects/item.dart';
+import 'package:budget_buddy/pages/delete_items.dart';
 import 'package:budget_buddy/widgets/budget_item.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +45,9 @@ class ItemListViewState extends State<ItemListView> {
               item: item, onDeleteItem: widget.onDeleteItem, cam: widget.cam);
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      //Changed floatingActionButton to persistentFooterButtons in order to have a delete button next to the add button
+      persistentFooterButtons: [
+      FloatingActionButton(
         onPressed: () {
           showDialog(
               context: context,
@@ -57,6 +61,24 @@ class ItemListViewState extends State<ItemListView> {
         tooltip: "Add New Item",
         child: const Icon(Icons.add),
       ),
+
+      //This is the new delete button
+      FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DeleteItemListView(items: widget.items, onDeleteItem: widget.onDeleteItem)
+            )
+          );
+
+        },
+        tooltip: "Delete item(s)",
+        heroTag: null,
+        child: const Icon(Icons.remove),
+        
+      ),
+      ],
     );
   }
 }
