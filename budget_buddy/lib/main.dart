@@ -5,6 +5,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+double totalBalance = 150.00;
+
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
   // can be called before `runApp()`
@@ -207,6 +209,13 @@ class MainNavigatorState extends State<MainNavigator> {
           selectedItemColor: Colors.green,
         ));
   }
+}
+ double getBalance(){
+  return totalBalance;
+
+}
+void setBalance(double i){
+  totalBalance = i;
 }
 // class MyHomePage extends StatefulWidget {
 //   const MyHomePage({super.key, required this.title});

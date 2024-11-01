@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:budget_buddy/widgets/buttons.dart';
+import 'package:budget_buddy/main.dart';
 
 // adapted from to-dont-list code
 typedef ItemsListChangedCallback = Function(Item item);
@@ -150,6 +151,7 @@ class _ItemDialogState extends State<ItemDialog> {
                     payment: amount,
                     image: img,
                     frequency: dropdownValue));
+                setBalance(getBalance()+ amount);    
                 Navigator.pop(context);
               });
             },

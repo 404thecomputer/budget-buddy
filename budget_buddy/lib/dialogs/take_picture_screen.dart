@@ -31,6 +31,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     _initializeControllerFuture = _controller.initialize();
   }
 
+  @override
   void dispose() {
     //dispose of the controller when the widget is disposed
     _controller.dispose();

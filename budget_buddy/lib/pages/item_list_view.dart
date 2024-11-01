@@ -4,6 +4,7 @@ import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/pages/delete_items.dart';
 import 'package:budget_buddy/widgets/budget_item.dart';
 import 'package:flutter/material.dart';
+import 'package:budget_buddy/main.dart';
 
 typedef ItemsListChangedCallback = Function(Item item);
 typedef ItemsListDeletedCallback = Function(Item item);
@@ -30,10 +31,18 @@ class ItemListView extends StatefulWidget {
 class ItemListViewState extends State<ItemListView> {
   @override
   Widget build(BuildContext context) {
+    String totalStr = getBalance().toStringAsFixed(2);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Budget Buddy"),
-        centerTitle: true,
+          title:  Row(
+            children: <Widget>[
+                Text(
+                'Budget Buddy',
+                ),
+                Spacer(),
+              Text("My Bills: \$$totalStr"),
+            ]
+           )
       ),
       body: ListView.builder(
         restorationId: 'sampleItemListView',
