@@ -81,6 +81,7 @@ class MainNavigatorState extends State<MainNavigator> {
           Item newItem = Item(
               name: item.name,
               date: item.date,
+              image: item.image,
               frequency: item.frequency,
               payment: item.payment);
           DateTime newDate =
@@ -96,6 +97,7 @@ class MainNavigatorState extends State<MainNavigator> {
           Item newItem = Item(
               name: item.name,
               date: item.date,
+              image: item.image,
               frequency: item.frequency,
               payment: item.payment);
           DateTime newDate = DateTime(
@@ -111,6 +113,7 @@ class MainNavigatorState extends State<MainNavigator> {
           Item newItem = Item(
               name: item.name,
               date: item.date,
+              image: item.image,
               frequency: item.frequency,
               payment: item.payment);
           DateTime newDate = DateTime(
@@ -126,6 +129,7 @@ class MainNavigatorState extends State<MainNavigator> {
           Item newItem = Item(
               name: item.name,
               date: item.date,
+              image: item.image,
               frequency: item.frequency,
               payment: item.payment);
           DateTime newDate =
