@@ -135,6 +135,71 @@ class MainNavigatorState extends State<MainNavigator> {
     //     }
     //   }
     //   items.sort((a, b) => a.date!.compareTo(b.date!));
+      if (item.frequency == "Daily") {
+        int i = 1;
+        while (i < 365) {
+          Item newItem = Item(
+              name: item.name,
+              date: item.date,
+              image: item.image,
+              frequency: item.frequency,
+              payment: item.payment);
+          DateTime newDate =
+              DateTime(item.date!.year, item.date!.month, item.date!.day + (i));
+          newItem.date = newDate;
+          items.add(newItem);
+          i++;
+        }
+      }
+      if (item.frequency == "Weekly") {
+        int i = 1;
+        while (i < 52) {
+          Item newItem = Item(
+              name: item.name,
+              date: item.date,
+              image: item.image,
+              frequency: item.frequency,
+              payment: item.payment);
+          DateTime newDate = DateTime(
+              item.date!.year, item.date!.month, item.date!.day + (7 * i));
+          newItem.date = newDate;
+          items.add(newItem);
+          i++;
+        }
+      }
+      if (item.frequency == "Biweekly") {
+        int i = 1;
+        while (i < 26) {
+          Item newItem = Item(
+              name: item.name,
+              date: item.date,
+              image: item.image,
+              frequency: item.frequency,
+              payment: item.payment);
+          DateTime newDate = DateTime(
+              item.date!.year, item.date!.month, item.date!.day + (14 * i));
+          newItem.date = newDate;
+          items.add(newItem);
+          i++;
+        }
+      }
+      if (item.frequency == "Monthly") {
+        int i = 1;
+        while (i < 12) {
+          Item newItem = Item(
+              name: item.name,
+              date: item.date,
+              image: item.image,
+              frequency: item.frequency,
+              payment: item.payment);
+          DateTime newDate =
+              DateTime(item.date!.year, item.date!.month + i, item.date!.day);
+          newItem.date = newDate;
+          items.add(newItem);
+          i++;
+        }
+      }
+      items.sort((a, b) => a.date!.compareTo(b.date!));
     });
   }
 
