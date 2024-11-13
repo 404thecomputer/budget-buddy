@@ -1,5 +1,4 @@
 import 'package:budget_buddy/dialogs/add_dialog.dart';
-import 'package:budget_buddy/main.dart';
 import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/pages/item_list_view.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +15,7 @@ class ItemCalendarView extends StatefulWidget {
     super.key,
     required this.onListChanged,
     required this.onDeleteItem,
+    required this.onCompleteItem,
     required this.cam,
   });
 
@@ -24,6 +24,7 @@ class ItemCalendarView extends StatefulWidget {
   final Function(DateTime, DateTime) onDaySelected;
   final ItemsListChangedCallback onListChanged;
   final ItemsListDeletedCallback onDeleteItem;
+  final Function(Item) onCompleteItem;
   final cam;
 
   @override
@@ -37,18 +38,10 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
 
   @override
   Widget build(BuildContext context) {
-    String totalStr = getBalance().toStringAsFixed(2);
     return Scaffold(
-     appBar: AppBar(
-          title: Row(
-            children: <Widget>[
-                Text(
-                'Budget Buddy',
-                ),
-                Spacer(),
-              Text("My Bills: \$$totalStr"),
-            ]
-           )
+      appBar: AppBar(
+        title: const Text("Budget Buddy"),
+        centerTitle: true,
       ),
       body: TableCalendar(
         shouldFillViewport: true,
@@ -60,9 +53,25 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
           return isSameDay(_selectedDay, day);
         },
         eventLoader: (day) {
-          return widget.items
+          List<Item> dayItems = widget.items
               .where((item) => isSameDay(item.date, day))
               .toList();
+
+          for (var item in widget.items) {
+            if (!item.isComplete && item.frequency != null) {
+              // Get all future dates for this recurring item
+              List<DateTime> futureDates = item.getFutureOccurrences();
+              
+              // If this day matches any future occurrence
+              if (futureDates.any((date) => isSameDay(date, day))) {
+                // add if we dont already have this item
+                if (!dayItems.contains(item)) {
+                  dayItems.add(item);
+                }
+              }
+            }
+          }
+          return dayItems;
         },
         onDaySelected: (selectedDay, focusedDay) {
           if (!isSameDay(_selectedDay, selectedDay)) {
@@ -83,6 +92,7 @@ class _ItemCalendarViewState extends State<ItemCalendarView> {
                     .toList(),
                 onListChanged: widget.onListChanged,
                 onDeleteItem: widget.onDeleteItem,
+                onCompleteItem: widget.onCompleteItem,
                 cam: widget.cam,
               ),
             ),

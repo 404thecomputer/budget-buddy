@@ -5,8 +5,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-double totalBalance = 150.00;
-
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
   // can be called before `runApp()`
@@ -75,6 +73,68 @@ class MainNavigatorState extends State<MainNavigator> {
   void _handleNewItem(Item item) {
     setState(() {
       items.add(item);
+      _updateRecurringItems();
+    //   if (item.frequency == "Daily") {
+    //     int i = 1;
+    //     while (i < 365) {
+    //       Item newItem = Item(
+    //           name: item.name,
+    //           date: item.date,
+    //           frequency: item.frequency,
+    //           payment: item.payment);
+    //       DateTime newDate =
+    //           DateTime(item.date!.year, item.date!.month, item.date!.day + (i));
+    //       newItem.date = newDate;
+    //       items.add(newItem);
+    //       i++;
+    //     }
+    //   }
+    //   if (item.frequency == "Weekly") {
+    //     int i = 1;
+    //     while (i < 52) {
+    //       Item newItem = Item(
+    //           name: item.name,
+    //           date: item.date,
+    //           frequency: item.frequency,
+    //           payment: item.payment);
+    //       DateTime newDate = DateTime(
+    //           item.date!.year, item.date!.month, item.date!.day + (7 * i));
+    //       newItem.date = newDate;
+    //       items.add(newItem);
+    //       i++;
+    //     }
+    //   }
+    //   if (item.frequency == "Biweekly") {
+    //     int i = 1;
+    //     while (i < 26) {
+    //       Item newItem = Item(
+    //           name: item.name,
+    //           date: item.date,
+    //           frequency: item.frequency,
+    //           payment: item.payment);
+    //       DateTime newDate = DateTime(
+    //           item.date!.year, item.date!.month, item.date!.day + (14 * i));
+    //       newItem.date = newDate;
+    //       items.add(newItem);
+    //       i++;
+    //     }
+    //   }
+    //   if (item.frequency == "Monthly") {
+    //     int i = 1;
+    //     while (i < 12) {
+    //       Item newItem = Item(
+    //           name: item.name,
+    //           date: item.date,
+    //           frequency: item.frequency,
+    //           payment: item.payment);
+    //       DateTime newDate =
+    //           DateTime(item.date!.year, item.date!.month + i, item.date!.day);
+    //       newItem.date = newDate;
+    //       items.add(newItem);
+    //       i++;
+    //     }
+    //   }
+    //   items.sort((a, b) => a.date!.compareTo(b.date!));
       if (item.frequency == "Daily") {
         int i = 1;
         while (i < 365) {
@@ -146,7 +206,34 @@ class MainNavigatorState extends State<MainNavigator> {
   void _handleDeleteItem(Item item) {
     setState(() {
       items.remove(item);
+      if (item.frequency != null) {
+        _updateRecurringItems();
+      }
     });
+  }
+
+  void _handleCompleteItem(Item item) {
+    setState(() {
+      item.isComplete = true;
+      if (item.frequency != null) {
+        DateTime? nextDate = item.getNextDate();
+        if (nextDate != null) {
+          items.add(item.copyWithNewDate(nextDate));
+        }
+      }
+      items.sort((a, b) => a.date!.compareTo(b.date!));
+    });
+  }
+
+  void _updateRecurringItems() {
+    final now = DateTime.now();
+    
+    // Remove completed items
+    items.removeWhere((item) => 
+      item.isComplete && item.date!.isBefore(now.subtract(const Duration(days: 30)))
+    );
+
+    items.sort((a, b) => a.date!.compareTo(b.date!));
   }
 
   List<Item> _getItemsForSelectedDay(DateTime day) {
@@ -155,14 +242,15 @@ class MainNavigatorState extends State<MainNavigator> {
 
   @override
   void initState() {
-    items = [
-      Item(
-          name: "Bill 5",
-          date: DateTime.now(),
-          payment: 150.0,
-          frequency: "Monthly")
-    ];
+    // items = [
+    //   Item(
+    //       name: "Bill 5",
+    //       date: DateTime(2024, 11, 10),
+    //       payment: 150.0,
+    //       frequency: "Monthly")
+    // ];
     super.initState();
+    _updateRecurringItems(); 
   }
 
   Widget returnScreen(int screenIndex) {
@@ -175,6 +263,7 @@ class MainNavigatorState extends State<MainNavigator> {
         selectedDay: selectedDay,
         onListChanged: _handleNewItem,
         onDeleteItem: _handleDeleteItem,
+        onCompleteItem: _handleCompleteItem,
         cam: widget.camera,
         onDaySelected: (selectedDay, focusedDay) {
           setState(() {
@@ -190,7 +279,8 @@ class MainNavigatorState extends State<MainNavigator> {
               : items,
           onListChanged: _handleNewItem,
           cam: widget.camera,
-          onDeleteItem: _handleDeleteItem);
+          onDeleteItem: _handleDeleteItem,
+          onCompleteItem: _handleCompleteItem);
     }
   }
 
@@ -213,13 +303,6 @@ class MainNavigatorState extends State<MainNavigator> {
           selectedItemColor: Colors.green,
         ));
   }
-}
- double getBalance(){
-  return totalBalance;
-
-}
-void setBalance(double i){
-  totalBalance = i;
 }
 // class MyHomePage extends StatefulWidget {
 //   const MyHomePage({super.key, required this.title});

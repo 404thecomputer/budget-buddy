@@ -11,10 +11,12 @@ class BudgetItem extends StatelessWidget {
       {super.key,
       required this.item,
       required this.onDeleteItem,
+      required this.onCompleteItem,
       required this.cam});
 
   final Item item;
   final ItemsListDeletedCallback onDeleteItem;
+  final Function(Item) onCompleteItem;
   final cam;
 
   @override
@@ -28,15 +30,31 @@ class BudgetItem extends StatelessWidget {
       pictureBool = "Image Attached";
     }
     String fo = fmf.output.symbolOnLeft;
-    String freq = item.frequency!;
+    String freq = item.frequency ?? "One Time";
     return ListTile(
-        title: Text(item.name),
-        leading: const CircleAvatar(
+        title: Text(
+          item.name,
+          style: TextStyle(
+            decoration: item.isComplete ? TextDecoration.lineThrough : null,
+          ),
+        ),
+        leading: CircleAvatar(
           // This might be the picture of the item
-          backgroundColor: Colors.green,
+          backgroundColor: item.isComplete ? Colors.grey : item.date!.isBefore(DateTime.now()) ? Colors.red : Colors.green,
         ),
         subtitle: Text(
-            "${DateFormat('MM-dd-yy').format(item.date!)} | $fo | $freq | $pictureBool"),
+          "${DateFormat('MM-dd-yy').format(item.date!)} | $fo | $freq | $pictureBool${item.isComplete ? " | Completed" : ""}"
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (!item.isComplete)
+              IconButton(
+                icon: const Icon(Icons.check_circle_outline),
+                onPressed: () => onCompleteItem(item),
+              ),
+          ],
+        ),
         onTap: () {
           //open a dialog box
           showDialog(
