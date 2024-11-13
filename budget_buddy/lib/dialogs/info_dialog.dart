@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_formatter/money_formatter.dart';
 import 'package:budget_buddy/widgets/buttons.dart';
-import 'package:budget_buddy/main.dart';
 
 typedef ItemsListDeletedCallback = Function(Item item);
 
@@ -126,7 +125,6 @@ class _DeleteDialogState extends State<DeleteDialog> {
             key: const Key("Delete"),
             child: const Text('Yes'),
             onPressed: () {
-              setBalance(getBalance() - widget.item.payment);
               widget.onDeleteItem(widget.item);
               Navigator.pop(context);
               Navigator.pop(context);

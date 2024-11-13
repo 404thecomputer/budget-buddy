@@ -4,7 +4,6 @@ import 'package:budget_buddy/objects/item.dart';
 import 'package:budget_buddy/pages/delete_items.dart';
 import 'package:budget_buddy/widgets/budget_item.dart';
 import 'package:flutter/material.dart';
-import 'package:budget_buddy/main.dart';
 
 typedef ItemsListChangedCallback = Function(Item item);
 typedef ItemsListDeletedCallback = Function(Item item);
@@ -15,11 +14,13 @@ class ItemListView extends StatefulWidget {
       required this.items,
       required this.onListChanged,
       required this.onDeleteItem,
+      required this.onCompleteItem,
       required this.cam});
 
   final List<Item> items;
   final ItemsListChangedCallback onListChanged;
   final ItemsListDeletedCallback onDeleteItem;
+  final Function(Item) onCompleteItem;
   final cam;
 
   @override
@@ -29,29 +30,48 @@ class ItemListView extends StatefulWidget {
 }
 
 class ItemListViewState extends State<ItemListView> {
+  bool showCompleted = false;
+
   @override
   Widget build(BuildContext context) {
-    String totalStr = getBalance().toStringAsFixed(2);
+    final displayedItems = widget.items.where((item) => 
+      item.isComplete == showCompleted
+    ).toList();
+
     return Scaffold(
       appBar: AppBar(
-          title:  Row(
-            children: <Widget>[
-                Text(
-                'Budget Buddy',
-                ),
-                Spacer(),
-              Text("My Bills: \$$totalStr"),
-            ]
-           )
+        title: const Text("Budget Buddy"),
+        centerTitle: true,
+        actions: [
+          // Toggle completed button
+          TextButton.icon(
+            onPressed: () {
+              setState(() {
+                showCompleted = !showCompleted;
+              });
+            },
+            icon: Icon(
+              showCompleted ? Icons.check_circle : Icons.check_circle_outline,
+              color: Colors.black,
+            ),
+            label: const Text(
+              'Show Completed',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
       ),
       body: ListView.builder(
         restorationId: 'sampleItemListView',
-        itemCount: widget.items.length,
+        itemCount: displayedItems.length,
         itemBuilder: (BuildContext context, int index) {
-          final item = widget.items[index];
+          final item = displayedItems[index];
 
           return BudgetItem(
-              item: item, onDeleteItem: widget.onDeleteItem, cam: widget.cam);
+              item: item, 
+              onDeleteItem: widget.onDeleteItem, 
+              onCompleteItem: widget.onCompleteItem,
+              cam: widget.cam);
         },
       ),
       //Changed floatingActionButton to persistentFooterButtons in order to have a delete button next to the add button
